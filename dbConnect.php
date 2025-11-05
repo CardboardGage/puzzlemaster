@@ -22,7 +22,21 @@
       $stmt->execute([$username, $email, $password, 0, $date, $date, 1]);
       $pdo->commit();
     } catch (PDOException $e) {
+      $pdo->rollBack();
       echo $e->getMessage();
     }
+  }
+
+  function checkAvailability($username, $email, $pdo) {
+    $query = "SELECT username, email FROM `user`
+    WHERE username = '$username' OR email='$email'";
+    
+    $result = $pdo->query($query);
+    if ($result->rowCount() == 0) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 ?> 
