@@ -47,11 +47,11 @@
     <form action="" method="post">
       <label for="username">Username:</label>
       <br>
-      <input type="text" name="username" required>
+      <input type="text" name="username" required maxlength="24">
       <br>
       <label for="password">Password:</label>
       <br>
-      <input type="text" name="password" required>
+      <input type="text" name="password" required maxlength="60" minlength="6">
       <br><br>
       <input type="submit" value="Log In">
     </form>

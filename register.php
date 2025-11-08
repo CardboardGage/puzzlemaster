@@ -37,13 +37,13 @@
           }
           ?> 
           <label for="email">Email</label>
-          <input type="text" placeholder="you@email.com" name="email" required>
+          <input type="text" placeholder="you@email.com" name="email" required maxlength="50">
           <br>
           <label for="username">Username</label>
-          <input type="text" placeholder="username" name="username" required> 
+          <input type="text" placeholder="username" name="username" required maxlength="24"> 
           <br>
           <label for="password">Password</label>
-          <input type="text" name="password" required>
+          <input type="text" name="password" required maxlength="60" minlength="6">
           <br><br>
           <input type="submit" value="Register">
         </form>
@@ -52,7 +52,7 @@
           $email = trim(sanitizeString(INPUT_POST,'email'));
           $password = trim(sanitizeString(INPUT_POST, 'password'));
 
-          $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
+          
 
           //check if any of the fields are empty, if so, redirect back to the form page
           if (!$username || !$email || !$password) {
@@ -60,12 +60,18 @@
             exit;
           }
 
+          $password = password_hash($password, PASSWORD_DEFAULT);
+
+          //check if email is a proper email
+          $emailValid = filter_var($email, FILTER_VALIDATE_EMAIL);
           if ($emailValid == false) {
             $_SESSION['emailWrong'] = true;
             header('Location: register.php');
             exit;
           }
 
+          //checks, via the function in dbConnect.php, if the username or email is 
+          //already used
           $available = checkAvailability($username, $email, $pdo);
           if (!$available) {
             $_SESSION['inUse'] = true;
@@ -73,7 +79,7 @@
             exit;
           }
           
-          $password = password_hash($password, PASSWORD_DEFAULT);
+          //adds user to the database
           addNewuser($username, $email, $password, $pdo);
           //redirect to the main page here
 
