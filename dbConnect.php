@@ -8,7 +8,7 @@
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   } catch (PDOException $e){
-    echo "<h1>Unable to connect to database</h1>";
+    echo $e->getMessage();
   }
 
 
@@ -37,6 +37,25 @@
     } else {
       return false;
     }
+  }
 
+  function checkUser($username, $password, $pdo) {
+    $query = "SELECT `password` FROM `user`
+    WHERE username = '$username'";
+
+    $result = $pdo->query($query);
+
+    if ($result->rowCount() == 0) {
+      return 'username';
+    }
+
+    $databasePassword = $result->fetchColumn();
+    if (password_verify($password, $databasePassword)) {
+      return 'accepted';
+    } else {
+      return 'password';
+    }
+
+    
   }
 ?> 

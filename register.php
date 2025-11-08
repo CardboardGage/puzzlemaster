@@ -2,7 +2,7 @@
   if (!session_id()) {
     session_start();
   }
-  if (!isset($_SESSION["inUse"])) {
+  if (!isset($_SESSION["inUse"]) || !isset($_SESSION["emailWrong"])) {
     $_SESSION["inUse"] = "";
     $_SESSION["emailWrong"] = "";
   }
