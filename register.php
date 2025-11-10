@@ -43,7 +43,7 @@
           <input type="text" placeholder="username" name="username" required maxlength="24"> 
           <br>
           <label for="password">Password</label>
-          <input type="text" name="password" required maxlength="60" minlength="6">
+          <input type="password" name="password" required maxlength="60" minlength="6">
           <br><br>
           <input type="submit" value="Register">
         </form>

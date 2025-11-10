@@ -51,7 +51,7 @@
       <br>
       <label for="password">Password:</label>
       <br>
-      <input type="text" name="password" required maxlength="60" minlength="6">
+      <input type="password" name="password" required maxlength="60" minlength="6">
       <br><br>
       <input type="submit" value="Log In">
     </form>
