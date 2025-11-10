@@ -8,7 +8,7 @@
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   } catch (PDOException $e){
-    echo "<h1>Unable to connect to database</h1>";
+    echo $e->getMessage();
   }
 
 
@@ -22,7 +22,40 @@
       $stmt->execute([$username, $email, $password, 0, $date, $date, 1]);
       $pdo->commit();
     } catch (PDOException $e) {
+      $pdo->rollBack();
       echo $e->getMessage();
     }
+  }
+
+  function checkAvailability($username, $email, $pdo) {
+    $query = "SELECT username, email FROM `user`
+    WHERE username = '$username' OR email='$email'";
+    
+    $result = $pdo->query($query);
+    if ($result->rowCount() == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function checkUser($username, $password, $pdo) {
+    $query = "SELECT `password` FROM `user`
+    WHERE username = '$username'";
+
+    $result = $pdo->query($query);
+
+    if ($result->rowCount() == 0) {
+      return 'username';
+    }
+
+    $databasePassword = $result->fetchColumn();
+    if (password_verify($password, $databasePassword)) {
+      return 'accepted';
+    } else {
+      return 'password';
+    }
+
+    
   }
 ?> 
