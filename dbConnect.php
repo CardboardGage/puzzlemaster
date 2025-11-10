@@ -55,7 +55,24 @@
     } else {
       return 'password';
     }
+  }
 
-    
+  function getUserHighScores($username, $pdo) {
+    $query = "SELECT score FROM runhistory
+    WHERE UserID = (
+      SELECT UserID FROM `user`
+      WHERE username = `$username`
+      )
+    ORDER BY score DESC";
+
+    $result = $pdo->query($query);
+  }
+
+  function getHighScores($pdo) {
+    $query = "SELECT score, username 
+    FROM runhistory INNER JOIN `user` USING(UserID)
+    ORDER BY score DESC";
+
+    $result = $pdo->query($query);
   }
 ?> 
