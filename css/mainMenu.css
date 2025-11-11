@@ -1,16 +1,59 @@
-* {
-  font-size: 1rem;
-
+h1 {
+    color: red;
+    text-align: center;
 }
 
-ul {
-  list-style-type: none;
+.buttons {
+    display: grid;
+    margin: 0 auto;
+    width: 20%;
+    margin-top: 15%;
 }
 
-.configMenu {
+button, #registerBtn {
+    text-align: center;
+    height: 110%;
+    width: 40%;
+    margin: auto;
+    font-size: medium;
+}
+
+h3 {
+    text-align: center;
+    margin: 3%;
+}
+
+form {
+    display: grid;
+    margin: auto;
+    width: 15%;
+    margin-top: 15%; 
+}   
+
+label {
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 4%;
+}
+
+input {
+    margin: auto;
+}
+
+#logIn {
+    margin-top: 5%;
+    width: 60%;
+    height: 110%;
+    font-size: 110%;
+}
+
+#logIn:hover {
+    cursor: pointer;
+    background-color: green;
+    border-radius: 6%;
+}
+
+.startMenu, .loginMenu, .configMenu {
   display: none;
 }
 
-.loginMenu {
-  display: none;
-}

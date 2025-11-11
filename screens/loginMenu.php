@@ -1,5 +1,6 @@
-<div class="loginMenu">
-
+<div class="buttons loginMenu">
+  <button class="backBtn">Back</button>  
+  <br>
   <form action="" method="post">
     <label for="username">Username or Email</label><br>
     <input type="text" name="username" id="">
@@ -8,8 +9,6 @@
     <button type="submit">Login</button>
   </form>
   <form action="../register.php" method="post">
-    <input type="submit" name="registerBtn" value="Register">
+    <input id="registerBtn" type="submit" name="registerBtn" value="Register">
   </form>
-
-  
 </div>

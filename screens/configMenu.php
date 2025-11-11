@@ -1,4 +1,4 @@
-    <div class="configMenu">
-      <li><input type="checkbox" name="Test" id="">Example Checkbox</li>
+    <div class="buttons configMenu">
       <br>
+      <button class="backBtn">Back</button>
     </div>

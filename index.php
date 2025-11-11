@@ -18,14 +18,9 @@
 <body>
     
   <div class="wrapper">
-    <ul>
       <?php
       include "screens/mainMenu.php";
-      include "screens/loginMenu.php";
-      include "screens/configMenu.php";
       ?>
-      <li><button id="backBtn" hidden=true>Back</button></li>
-    </ul>
   </div>
 
   <script src="js/menu.js"></script>
