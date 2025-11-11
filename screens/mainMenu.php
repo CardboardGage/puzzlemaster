@@ -1,8 +1,12 @@
-    <button id="startBtn" class="mainMenu">Start Run</button> 
-    <button id="loginBtn" class="mainMenu">Login</button>  
-    <button id="configBtn" class="mainMenu">Config</button>
-    <button id="maintBtn" class="mainMenu">Maintenance</button>
-    <button id="backBtn" hidden=true>Back</button>
 
-    
-    <script src="../js/menu.js"></script>
+    <div class="mainMenu">
+      <li><button id="startBtn" class="mainMenuBtn">Start Run</button></li>
+      <br>
+      <li><button id="loginBtn" class="mainMenuBtn">Login</button></li>
+      <br>
+      <li><button id="configBtn" class="mainMenuBtn">Config</button></li>
+      <br>
+      <li><button id="maintBtn" class="mainMenuBtn">Maintenance</button></li>
+    </div>
+
+      
