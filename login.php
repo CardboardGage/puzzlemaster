@@ -19,6 +19,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puzzlemaster - Login</title>
+  <link rel="stylesheet" href="css/mainMenu.css">
 </head>
 
 <?php 
@@ -53,7 +54,7 @@
       <br>
       <input type="password" name="password" required maxlength="60" minlength="6">
       <br><br>
-      <input type="submit" value="Log In">
+      <input type="submit" value="Log In" id="logIn">
     </form>
   </div>
 </body>
