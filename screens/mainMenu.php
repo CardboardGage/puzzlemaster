@@ -1,6 +1,9 @@
 
     <div class="buttons startMenu">
       <button class="backBtn">Back</button>
+      <form action="../screens/gameScreen.php" method="post">
+        <input id="startGameBtn" type="submit" name="startGameBtn" value="start">
+      </form>
     </div>
     <div class="buttons mainMenu">
       <h3>Logged in?</h3>
