@@ -82,6 +82,8 @@
           //adds user to the database
           addNewuser($username, $email, $password, $pdo);
           //redirect to the main page here
+          header("Location: index.php");
+          exit;
 
         }
         ?> 

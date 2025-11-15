@@ -15,6 +15,7 @@ $loginBtn.on("click", ()=>{
   console.log("Login Pressed");
   $(".mainMenu").hide();
   $backBtn.show();
+  window.location.href = "../login.php";
 });
 
 $configBtn.on("click", ()=>{
