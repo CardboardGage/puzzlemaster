@@ -19,6 +19,7 @@ $loginBtn.on("click", ()=>{
   $(".loginMenu").show();
   $(".startMenu").hide();
   $backBtn.show();
+  window.location.href = "../login.php";
 });
 
 $configBtn.on("click", ()=>{

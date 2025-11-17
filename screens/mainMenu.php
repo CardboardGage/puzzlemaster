@@ -1,10 +1,7 @@
-
-    <div class="buttons startMenu">
-      <button class="backBtn">Back</button>
-      <form action="../screens/gameScreen.php" method="post">
-        <input id="startGameBtn" type="submit" name="startGameBtn" value="start">
-      </form>
-    </div>
+<?php if (!isset($_SESSION["loggedIn"])) {
+  $_SESSION["loggedIn"] = "false";
+}
+?> 
     <div class="buttons mainMenu">
       <h3>Logged in?</h3>
       <button id="startBtn" class="mainMenuBtn">Start Run</button> 
