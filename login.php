@@ -10,6 +10,12 @@
   if (!isset($_SESSION["username"]) || !isset($_SESSION["password"])) {
     $_SESSION["username"] = "";
     $_SESSION["password"] = "";
+    $_SESSION["loggedIn"] = false;
+  }
+
+  if ($_SESSION["loggedIn"]) {
+    header("Location: index.php");
+    exit();
   }
 ?> 
 
@@ -56,6 +62,11 @@
       <br><br>
       <input type="submit" value="Log In" id="logIn">
     </form>
+
+    <form action="register.php" method="get">
+      <label for="submit">Don't have an account?</label>
+      <input type="submit" value="Register" name="submit">
+    </form>
   </div>
 </body>
 <?php 
@@ -78,7 +89,10 @@
       header('Location: login.php');
       exit;
     } else if ($result == 'accepted') {
+      $_SESSION["loggedIn"] = true;
       //TODO: redirect to destination page here
+      header("Location: index.php");
+      exit;
     }
   }
 ?> 
