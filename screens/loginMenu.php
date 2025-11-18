@@ -9,6 +9,6 @@
     <button type="submit">Login</button>
   </form>
   <form action="../register.php" method="post">
-    <input id="registerBtn" type="submit" name="registerBtn" value="Register">
+    <input id="registerBtn" class="formBtn" type="submit" name="registerBtn" value="Register">
   </form>
 </div>

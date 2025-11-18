@@ -19,11 +19,11 @@ CREATE TABLE `RunHistory` (
     LevelReached int,
     TimeOf dateTime,
     Seed int,
-    ModelID int
+    ModeID int
 );
 
 CREATE TABLE `GameMode` (
-	ModelID int PRIMARY KEY,
+	ModeID int PRIMARY KEY,
     `Mode` varChar(24)
 );
 
