@@ -36,6 +36,21 @@ label {
     margin-top: 4%;
 }
 
+.option {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;  
+    gap: 3px;
+}
+
+.option label {
+    margin: 0;
+}
+
+.configMenu input {
+    margin: 0;
+}
+
 input {
     margin: auto;
 }
@@ -56,4 +71,3 @@ input {
 .startMenu, .loginMenu, .configMenu, .devMenu {
   display: none;
 }
-
