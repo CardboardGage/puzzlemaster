@@ -1,11 +1,12 @@
+DROP DATABASE IF EXISTS `puzzlemaster`;
 CREATE DATABASE `puzzlemaster`;
 USE puzzlemaster;
 
 CREATE TABLE `User` (
-	UserID int,
-    Username varChar(24),
-    Email varChar(50),
-    `Password` varChar(50),
+	UserID int PRIMARY KEY AUTO_INCREMENT,
+    Username varChar(24) NOT NULL,
+    Email varChar(50) NOT NULL,
+    `Password` varChar(60) NOT NULL,
     Verified bool,
     TimeCreated dateTime,
     LastLogin dateTime,
@@ -13,8 +14,8 @@ CREATE TABLE `User` (
 );
 
 CREATE TABLE `RunHistory` (
-	RunID int,
-    UserID int,
+	RunID int PRIMARY KEY,
+    UserID int NOT NULL,
     Score int,
     LevelReached int,
     TimeOf dateTime,
@@ -23,7 +24,7 @@ CREATE TABLE `RunHistory` (
 );
 
 CREATE TABLE `GameMode` (
-	ModelID int,
+	ModelID int PRIMARY KEY,
     `Mode` varChar(24)
 );
 
