@@ -22,7 +22,6 @@
     
   <div class="wrapper">
     <?php
-      echo $_SESSION["loggedIn"];
       include "screens/mainMenu.php";
       ?>
   </div>

@@ -90,7 +90,7 @@
       exit;
     } else if ($result == 'accepted') {
       $_SESSION["loggedIn"] = true;
-      //TODO: redirect to destination page here
+      //redirect to destination page here
       header("Location: index.php");
       exit;
     }
