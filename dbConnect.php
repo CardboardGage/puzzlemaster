@@ -13,6 +13,7 @@
 
 
   function addNewUser($username, $email, $password, $pdo) {
+    date_default_timezone_set("America/Chicago");
     $date = date("Y-m-d H:i:s");
     try {
       $pdo->beginTransaction();
@@ -54,6 +55,23 @@
       return 'accepted';
     } else {
       return 'password';
+    }
+  }
+
+  function updateLogin($username, $pdo) {
+    date_default_timezone_set("America/Chicago");
+    $date = date("Y-m-d H:i:s");
+    $query = "UPDATE `user` SET LastLogin = '$date'
+    WHERE UserID = (SELECT UserID FROM `user` WHERE Username=`$username`)";
+    echo $query;
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      echo $e->getMessage();
     }
   }
 

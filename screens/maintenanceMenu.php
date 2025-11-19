@@ -26,7 +26,7 @@
     <?php if ($_SESSION['loggedIn'])  { ?>
     <button id="editUserBtn" class="dataBtn">Edit User data</button>
     <div id="userDataEditor" hidden>
-      <form ation="" method="post">
+      <form action="" method="post">
         <label for="userID">UserID</label>
         <br>
         <label for="email">Email</label>
