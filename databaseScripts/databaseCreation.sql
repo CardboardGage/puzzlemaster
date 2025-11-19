@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `puzzlemaster`;
 CREATE DATABASE `puzzlemaster`;
 USE puzzlemaster;
 
@@ -5,7 +6,7 @@ CREATE TABLE `User` (
 	UserID int PRIMARY KEY AUTO_INCREMENT,
     Username varChar(24) NOT NULL,
     Email varChar(50) NOT NULL,
-    `Password` varChar(50) NOT NULL,
+    `Password` varChar(60) NOT NULL,
     Verified bool,
     TimeCreated dateTime,
     LastLogin dateTime,
