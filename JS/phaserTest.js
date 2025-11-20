@@ -1,7 +1,10 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    // creatContainer: true,
+    // behindCanvas: true,
+    // PointerEvent: "gameArea",
+    width: GAME_WIDTH,
+    height: GAME_HIEGHT,
     scene: { preload, create, update }
 };
 

@@ -2,6 +2,8 @@
 const ROWS = 8;
 const COLS = 8;
 const TILE_SIZE = 64;   // adjust to fit your background
+const GAME_WIDTH = COLS * TILE_SIZE;
+const GAME_HIEGHT = ROWS * TILE_SIZE;
 
 // Round / Score settings
 const MOVES_PER_ROUND   = 10;   // moves allowed per round
