@@ -93,4 +93,13 @@
 
     $result = $pdo->query($query);
   }
+
+  function getFullLeaderboard($pdo) {
+    $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID, user.Username 
+      FROM puzzlemaster.runhistory
+      LEFT JOIN user USING (UserID)
+      ORDER BY RunID ASC";
+
+      return $pdo->query($query);
+  }
 ?> 
