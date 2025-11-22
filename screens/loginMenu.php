@@ -8,7 +8,7 @@
     <input type="text" name="password" id="">
     <button type="submit">Login</button>
   </form>
-  <form action="../register.php" method="post">
+  <form action="../register.php" method="get">
     <input id="registerBtn" class="formBtn" type="submit" name="registerBtn" value="Register">
   </form>
 </div>

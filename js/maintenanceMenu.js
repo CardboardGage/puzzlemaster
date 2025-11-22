@@ -27,12 +27,8 @@ $createMode.on("click", ()=>{
 });
 
 $backBtn.on("click", ()=>{
-  $("#userDataEditor").hide();
-  $("#runDataGenerator").hide();
-  $("#modeEditor").hide();
-  $dataBtn.show();
-  $backBtn.hide();
-  $return.show();
+  console.log("back button");
+  window.location.href="maintenanceMenu.php";
 });
 
 $return.on("click", ()=>{
