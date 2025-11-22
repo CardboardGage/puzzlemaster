@@ -102,4 +102,20 @@
 
       return $pdo->query($query);
   }
+
+  function getUserDataByUsername($username, $pdo) {
+    $query = "SELECT * FROM `user` 
+    WHERE username=?";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$username]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      echo $e->getMessage();
+    }
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
 ?> 
