@@ -113,7 +113,7 @@
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
-      echo $e->getMessage();
+      throw $e;
     }
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
@@ -142,7 +142,7 @@
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
-      echo $e->getMessage();
+      throw $e;
     }
   }
 
@@ -151,7 +151,7 @@
     VALUES (?, ?, ?, ?, ?, ?);";
     date_default_timezone_set("America/Chicago");
     $timeof = date("Y-m-d H:i:s");
-    
+
     try {
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
@@ -159,7 +159,22 @@
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
-      echo $e->getMessage();
+      throw $e;
+    }
+  }
+
+  function createMode($modeName, $pdo) {
+    $query = "INSERT INTO gamemode (Mode) 
+    VALUES (?);";
+
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$modeName]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
     }
   }
 ?> 

@@ -53,7 +53,12 @@
     <!-- editing user data -->
     <?php if ($method == "GET" && isset($_GET["userSubmit"])) {
       $username = trim(sanitizeString(INPUT_GET, 'username'));
-      $data = getUserDataByUsername($username, $pdo);
+
+      try {
+        $data = getUserDataByUsername($username, $pdo);
+      } catch (PDOException $e) {
+        echo $e->getMessage();
+      } finally {
     ?> 
       <div id="userDataEditor">
       <form action="" method="post">
@@ -83,7 +88,7 @@
       <br>
       <br>
     </div>
-    <?php } ?>
+    <?php } } ?>
 
     <!-- create run menu -->
     <?php if ($method == "GET"&& isset($_GET["createRun"])) {?>
@@ -117,10 +122,7 @@
     <!--create mode menu -->
     <?php if ($method == "GET"&& isset($_GET["createMode"])) {?>
       <div id="modeEditor">
-      <form ation="" method="post">
-        <label for="modeID">Mode ID number</label>
-        <input type="text" name="modeID" id="" value="01">
-        <br>
+      <form action="" method="post">
         <label for="modeName">Mode</label>
         <input type="text" name="modeName" id="" value="classic">
         <input type="submit" value="Save" name="saveMode">
@@ -140,7 +142,12 @@
     $verified = isset($_POST["verified"]);
     $tutorialFlag = isset($_POST["tutorialFlag"]);
 
-    updateUser($userID, $username, $email, $verified, $tutorialFlag, $pdo);
+    try {
+      updateUser($userID, $username, $email, $verified, $tutorialFlag, $pdo);
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      exit;
+    }
 
     header("Location: maintenanceMenu.php");
     exit;
@@ -152,8 +159,24 @@
     $seed = trim(sanitizeInt(INPUT_POST,"seed"));
     $mode = trim(sanitizeInt(INPUT_POST,"mode"));
 
-    createRun($userID, $score, $levelReached, $seed, $mode, $pdo);
+    try {
+      createRun($userID, $score, $levelReached, $seed, $mode, $pdo);
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+    }
 
+    header("Location: maintenanceMenu.php");
+    exit;
+  }
+  elseif ($method == "POST" && isset($_POST["saveMode"])) {
+    $modeName = trim(sanitizeString(INPUT_POST,"modeName"));
+
+    try {
+      createMode($modeName, $pdo);
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      exit;
+    }
     header("Location: maintenanceMenu.php");
     exit;
   }?> 
