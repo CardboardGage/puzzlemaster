@@ -58,7 +58,7 @@
       <div id="userDataEditor">
       <form action="" method="post">
         <label for="userID">UserID</label>
-        <input type="text" name="userID" disabled value="<?=$data["UserID"]?>">
+        <input type="text" name="userID" readonly value="<?=$data["UserID"]?>">
         <br>
         <label for="email">Email</label>
         <input type="text" placeholder="you@email.com" name="email" required maxlength="50" value="<?=$data["Email"]?>">
@@ -67,7 +67,7 @@
         <input type="text" placeholder="username" name="username" required maxlength="24" value="<?=$data["Username"]?>"> 
         <br>    
         <label for="verified">Email Verified?</label>
-        <input type="checkbox" name="tutorialFlag" id="" <?php if ($data["Verified"]) {?> checked <?php }?> >
+        <input type="checkbox" name="verified" value="true" id="verified" <?php if ($data["Verified"]) {?> checked <?php }?> >
         <br>
         <label for="timeCreated">Account Created: </label>
         <input type="text" name="timeCreated" id="" value="<?=$data["TimeCreated"]?>" disabled>
@@ -76,8 +76,8 @@
         <input type="text" name="lastLogin" id="" value="<?=$data["LastLogin"]?>" disabled>
         <br>
         <label for="tutorialFlag">Tutorial Complete: </label>
-        <input type="checkbox" name="tutorialFlag" id="" <?php if ($data["TutorialFlag"]) {?> checked <?php }?>>
-        <input type="submit" value="Save Changes">
+        <input type="checkbox" name="tutorialFlag" value="true" id="" <?php if ($data["TutorialFlag"]) {?> checked <?php }?>>
+        <input type="submit" value="Save Changes" name="saveUser">
       </form>
       <button id="backBtn">Cancel</button>
       <br>
@@ -93,7 +93,7 @@
         <input type="text" name="runID" id="" value="123" disabled>
         <br>
         <label for="userID">UserID number</label>
-        <input type="text" name="userID" id="" value="004" disabled>
+        <input type="text" name="userID" id="" value="004">
         <br>
         <label for="score">Score</label>
         <input type="text" name="score" id="scoreTxt" value="0">
@@ -101,12 +101,12 @@
         <label for="levelReached">Level Reached</label>
         <input type="text" name="levelReached" id="" value="0">
         <br>
-        <label for="timeOf">Time of Run</label>
-        <input type="text" name="timeOf" id="" value="0">
+        <label for="seed">Seed</label>
+        <input type="text" name="seed" value="0">
         <br>
         <label for="mode">Mode</label>
         <input type="text" name="mode" id="" value="0">
-        <input type="submit" value="Save">
+        <input type="submit" value="Save" name="saveRun">
       </form>
       <button id="backBtn">Cancel</button>
       <br>
@@ -123,7 +123,7 @@
         <br>
         <label for="modeName">Mode</label>
         <input type="text" name="modeName" id="" value="classic">
-        <input type="submit" value="Save">
+        <input type="submit" value="Save" name="saveMode">
       </form>
       <button id="backBtn">Cancel</button>
       <br>
@@ -132,6 +132,31 @@
     <?php } ?> 
   </div>
   <?php } ?> 
+
+  <?php if ($method == "POST" && isset($_POST["saveUser"])) {
+    $userID = trim(sanitizeString(INPUT_POST,"userID"));
+    $username = trim(sanitizeString(INPUT_POST,"username"));
+    $email = trim(sanitizeString(INPUT_POST,"email"));
+    $verified = isset($_POST["verified"]);
+    $tutorialFlag = isset($_POST["tutorialFlag"]);
+
+    updateUser($userID, $username, $email, $verified, $tutorialFlag, $pdo);
+
+    header("Location: maintenanceMenu.php");
+    exit;
+  } 
+  elseif ($method == "POST" && isset($_POST["saveRun"])) {
+    $userID = trim(sanitizeInt(INPUT_POST,"userID"));
+    $score = trim(sanitizeInt(INPUT_POST,"score"));
+    $levelReached = trim(sanitizeInt(INPUT_POST,"levelReached"));
+    $seed = trim(sanitizeInt(INPUT_POST,"seed"));
+    $mode = trim(sanitizeInt(INPUT_POST,"mode"));
+
+    createRun($userID, $score, $levelReached, $seed, $mode, $pdo);
+
+    header("Location: maintenanceMenu.php");
+    exit;
+  }?> 
 
   <script src="../js/maintenanceMenu.js"></script>
 

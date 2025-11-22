@@ -14,7 +14,7 @@ CREATE TABLE `User` (
 );
 
 CREATE TABLE `RunHistory` (
-	RunID int PRIMARY KEY,
+	RunID int PRIMARY KEY AUTO_INCREMENT,
     UserID int NOT NULL,
     Score int,
     LevelReached int,
@@ -24,7 +24,7 @@ CREATE TABLE `RunHistory` (
 );
 
 CREATE TABLE `GameMode` (
-	ModeID int PRIMARY KEY,
+	ModeID int PRIMARY KEY AUTO_INCREMENT,
     `Mode` varChar(24)
 );
 

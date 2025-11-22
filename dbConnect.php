@@ -118,4 +118,48 @@
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
+
+  function updateUser($userID, $username, $email, $verified, $tutorialFlag, $pdo) {
+    if ($tutorialFlag) {
+      $tutorialFlag = 1;
+    } else {
+      $tutorialFlag = 0;
+    }
+
+    if ($verified) {
+      $verified = 1;
+    } else {
+      $verified = 0;
+    }
+
+    $query = "UPDATE `user`
+    SET username = ?, email = ?, verified = ?, TutorialFlag = ?
+    WHERE UserID = $userID";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$username, $email, $verified, $tutorialFlag]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      echo $e->getMessage();
+    }
+  }
+
+  function createRun($userID, $score, $levelReached, $seed, $mode, $pdo) {
+    $query = "INSERT INTO runhistory (UserID, score, levelreached, timeof, seed, modelID)
+    VALUES (?, ?, ?, ?, ?, ?);";
+    date_default_timezone_set("America/Chicago");
+    $timeof = date("Y-m-d H:i:s");
+    
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$userID, $score, $levelReached, $timeof, $seed, $mode]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      echo $e->getMessage();
+    }
+  }
 ?> 
