@@ -11,7 +11,6 @@
     echo $e->getMessage();
   }
 
-
   function addNewUser($username, $email, $password, $pdo) {
     date_default_timezone_set("America/Chicago");
     $date = date("Y-m-d H:i:s");
@@ -94,6 +93,20 @@
     $result = $pdo->query($query);
   }
 
+  function addNewRun($runID, $userID, $score, $levelReached, $timeOf, $seed, $modeID, $pdo) {
+    try {
+      $pdo->beginTransaction();
+      $query = "INSERT INTO runhistory (RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID)
+      VALUES (?,?,?,?,?,?,?);";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$runID, $userID, $score, $levelReached, $timeOf, $seed, $modeID]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      echo $e->getMessage();
+    }
+  }
+  
   function getFullLeaderboard($pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID, user.Username 
       FROM puzzlemaster.runhistory
@@ -103,6 +116,25 @@
       return $pdo->query($query);
   }
 
+  function getNextRunID($pdo) {
+    $query = "SELECT RunID
+      FROM runhistory
+      ORDER BY RunID DESC
+      LIMIT 1";
+
+      $result = $pdo->query($query)->fetch();
+      if ($result >= 0) {
+        return $result;
+      } else {
+        return 0;
+      }
+  }
+
+ function getModes($pdo) {
+    $query = "SELECT ModeID, Mode FROM gamemode";
+    return $pdo->query($query);
+  }
+  
   function getUserDataByUsername($username, $pdo) {
     $query = "SELECT * FROM `user` 
     WHERE username=?";
