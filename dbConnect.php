@@ -179,7 +179,7 @@
   }
 
   function createRun($userID, $score, $levelReached, $seed, $mode, $pdo) {
-    $query = "INSERT INTO runhistory (UserID, score, levelreached, timeof, seed, modelID)
+    $query = "INSERT INTO runhistory (UserID, score, levelreached, timeof, seed, modeID)
     VALUES (?, ?, ?, ?, ?, ?);";
     date_default_timezone_set("America/Chicago");
     $timeof = date("Y-m-d H:i:s");
