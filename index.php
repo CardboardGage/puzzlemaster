@@ -23,6 +23,7 @@
   <div class="wrapper">
     <?php
       include "screens/mainMenu.php";
+      include "screens/leaderboard.php";
       ?>
   </div>
 

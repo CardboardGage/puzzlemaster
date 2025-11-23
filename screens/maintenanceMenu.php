@@ -18,6 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puzzlemaster: Database Maintenance</title>
   <link rel="stylesheet" href="../css/mainMenu.css">
+  <link rel="stylesheet" href="../css/maintenanceMenu.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 </head>
@@ -32,6 +33,9 @@
         </form>
         <form action="" method="get">
           <input type="submit" id="createRunBtn" class="dataBtn" value="Create Run Data" name="createRun">
+        </form>
+        <form action="leaderboardAdmin.php" method="post">
+          <input type="submit" id="leaderboardBtn" class="dataBtn" value="View Leaderboard" name="leaderboard">
         </form>
         <form action="" method="get">
           <input type="submit" id="createModeBtn" class="dataBtn" value="Create Mode" name="createMode">
@@ -60,7 +64,7 @@
         echo $e->getMessage();
       } finally {
     ?> 
-      <div id="userDataEditor">
+    <div id="userDataEditor">
       <form action="" method="post">
         <label for="userID">UserID</label>
         <input type="text" name="userID" readonly value="<?=$data["UserID"]?>">
@@ -92,7 +96,7 @@
 
     <!-- create run menu -->
     <?php if ($method == "GET"&& isset($_GET["createRun"])) {?>
-      <div id="runDataGenerator">
+    <div id="runDataGenerator">
       <form action="" method="post">
         <label for="runID">RunID number</label>
         <input type="text" name="runID" id="" value="123" disabled>
@@ -110,7 +114,13 @@
         <input type="text" name="seed" value="0">
         <br>
         <label for="mode">Mode</label>
-        <input type="text" name="mode" id="" value="0">
+        <select name="mode" id="modeSelect"><?php 
+          $modeList = getModes($pdo);
+          while ($mode = $modeList->fetch()) {
+            ?>
+            <option value="<?= $mode['ModeID'] ?>"><?= $mode["Mode"] ?>(<?= $mode['ModeID'] ?>)</option><?php
+          }
+          ?></select><br>
         <input type="submit" value="Save" name="saveRun">
       </form>
       <button id="backBtn">Cancel</button>

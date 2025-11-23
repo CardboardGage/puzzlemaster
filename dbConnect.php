@@ -92,20 +92,6 @@
 
     $result = $pdo->query($query);
   }
-
-  function addNewRun($runID, $userID, $score, $levelReached, $timeOf, $seed, $modeID, $pdo) {
-    try {
-      $pdo->beginTransaction();
-      $query = "INSERT INTO runhistory (RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID)
-      VALUES (?,?,?,?,?,?,?);";
-      $stmt = $pdo->prepare($query);
-      $stmt->execute([$runID, $userID, $score, $levelReached, $timeOf, $seed, $modeID]);
-      $pdo->commit();
-    } catch (PDOException $e) {
-      $pdo->rollBack();
-      echo $e->getMessage();
-    }
-  }
   
   function getFullLeaderboard($pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID, user.Username 
@@ -128,6 +114,18 @@
       } else {
         return 0;
       }
+  }
+
+  function getRunByID($runID, $pdo) {
+    $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID 
+    FROM puzzlemaster.runhistory
+    WHERE RunID = ?
+    LIMIT 1";
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$runID]);
+
+    return $stmt->fetch();
   }
 
  function getModes($pdo) {

@@ -3,6 +3,11 @@ body {
     text-align: center;
 }
 
+input {
+  width: 8rem;
+  font-size: 1rem;
+}
+
 table {
     width: 50%;
     border-style: ridge;
@@ -15,26 +20,9 @@ td {
     text-align: left;
     background-color: lightblue;
     vertical-align: top;
-
 }
-/* 
-td.author {
-    background-color: lightblue;
-    font-family:  Arial;
-    vertical-align: top;
-} 
-
-td.authorid {
-    color: peachpuff;
-    background-color: #336699;
-    font-family: Arial;
-    vertical-align: top;
-    font-weight: 600;
-    text-align: right;
-} */
 
 td.links {
-    /* font-family: Arial; */
     font-size: 0.8em;
     font-weight: 600;
     text-align: center;

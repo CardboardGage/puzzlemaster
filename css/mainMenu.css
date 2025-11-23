@@ -71,3 +71,26 @@ input {
 .startMenu, .loginMenu, .configMenu, .devMenu {
   display: none;
 }
+
+#leaderboard {
+    display: grid;
+    text-align: center;
+}
+
+#leaderboard table {
+    width: 10%;
+    border-style: ridge;
+    border-width: 4px;
+    margin: auto;
+}
+
+#leaderboard td {
+    padding: 4px;
+    text-align: left;
+    background-color: lightblue;
+    vertical-align: top;
+}
+
+#leaderboard ul {
+    list-style-type: none;
+}
