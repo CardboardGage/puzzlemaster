@@ -58,7 +58,11 @@
   <?php 
   } else {
     ?> 
-  <a href="<?= $thisPage ?>?clicked=1">Add new entry</a><br><?php
+  <form action="maintenanceMenu.php" method="get">
+    <input type="hidden" name="fromLeaderboard">
+    <input type="submit" name="createRun" value="Create New Entry">
+  </form>
+  <br><?php
   }
 
   // $addEntrySubmit = sanitizeString(INPUT_POST, "addEntry");
