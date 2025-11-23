@@ -9,6 +9,10 @@
   $method = $_SERVER['REQUEST_METHOD'];
 
   $_SESSION["loggedIn"] = true;
+
+  if (!isset($_SESSION["target"])) {
+    $_SESSION["target"] = "";
+  }
 ?>
 
 <!DOCTYPE html>
@@ -95,8 +99,12 @@
     <?php } } ?>
 
     <!-- create run menu -->
-    <?php if ($method == "GET"&& isset($_GET["createRun"])) {?>
-    <div id="runDataGenerator">
+    <?php if ($method == "GET" && isset($_GET["createRun"])) {
+      if (isset($_GET["fromLeaderboard"])) {
+        $_SESSION["target"] = "leaderboardAdmin.php";
+      }
+      ?>
+      <div id="runDataGenerator">
       <form action="" method="post">
         <label for="runID">RunID number</label>
         <input type="text" name="runID" id="" value="123" disabled>
@@ -130,7 +138,7 @@
     <?php } ?>
 
     <!--create mode menu -->
-    <?php if ($method == "GET"&& isset($_GET["createMode"])) {?>
+    <?php if ($method == "GET" && isset($_GET["createMode"])) {?>
       <div id="modeEditor">
       <form action="" method="post">
         <label for="modeName">Mode</label>
@@ -175,8 +183,13 @@
       echo $e->getMessage();
     }
 
-    header("Location: maintenanceMenu.php");
-    exit;
+    if ($_SESSION["target"] == "leaderboardAdmin.php") {
+      header("Location: leaderboardAdmin.php");
+      exit;
+    } else {
+      header("Location: maintenanceMenu.php");
+      exit;
+    }
   }
   elseif ($method == "POST" && isset($_POST["saveMode"])) {
     $modeName = trim(sanitizeString(INPUT_POST,"modeName"));

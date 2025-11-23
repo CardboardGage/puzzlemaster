@@ -16,6 +16,13 @@
 
     require "../dbConnect.php";
   
+    ?> 
+  <form action="maintenanceMenu.php" method="get">
+    <input type="hidden" name="fromLeaderboard">
+    <input type="submit" name="createRun" value="New Entry">
+  </form>
+  <br><?php
+
   $runHistoryResult = getFullLeaderboard($pdo);
   
   ?>
