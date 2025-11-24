@@ -20,7 +20,6 @@ if (!isset($runData) || isset($cancel)) {
   header("Location: ../leaderboardAdmin.php");
 }
 
-
 ?>
 <script>
   $(document).ready(() => {

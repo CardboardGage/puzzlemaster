@@ -228,4 +228,18 @@
       throw $e;
     }
   }
+
+  // Removes an entry from runHistory by its RunID
+  function deleteRun($runID, $pdo) {
+    $query = "DELETE FROM runHistory WHERE RunID = $runID";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
+    }
+  }
 ?> 
