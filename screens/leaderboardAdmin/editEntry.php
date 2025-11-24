@@ -31,7 +31,17 @@ if (!isset($runData) || isset($cancel)) {
 </head>
 <body>
   <?php  
+  // Pushes changes and redirects back to leaderboardAdmin
   if (isset($saveChanges)) {
+    $runID = trim(sanitizeInt(INPUT_GET, 'runID'));
+    $score = trim(sanitizeInt(INPUT_POST, 'score'));
+    $level = trim(sanitizeInt(INPUT_POST, 'levelReached'));
+    $timeOf = trim(sanitizeString(INPUT_POST, 'timeOf'));
+    $seed = trim(sanitizeInt(INPUT_POST, 'seed'));
+    $mode = trim(sanitizeInt(INPUT_POST, 'mode'));
+
+    editRun($runID, $score, $level, $timeOf, $seed, $mode, $pdo);
+    header("Location: ../leaderboardAdmin.php");
 
   } else {
   ?>
@@ -40,10 +50,13 @@ if (!isset($runData) || isset($cancel)) {
     <input type="text" name="runID" id="" value="<?= $runData['RunID'] ?>" disabled>
     <br>
     <label for="userID">UserID number</label>
-    <input type="text" name="userID" id="" value="<?= $runData['UserID'] ?>">
+    <input type="text" name="userID" id="" value="<?= $runData['UserID'] ?>" disabled>
     <br>
     <label for="score">Score</label>
     <input type="text" name="score" id="scoreTxt" value="<?= $runData['Score'] ?>">
+    <br>
+    <label for="timeOf">Time Of</label>
+    <input type="text" name="timeOf" id="timeTxt" value="<?= $runData['TimeOf'] ?>">
     <br>
     <label for="levelReached">Level Reached</label>
     <input type="text" name="levelReached" id="" value="<?= $runData['LevelReached'] ?>">

@@ -93,6 +93,7 @@
     $result = $pdo->query($query);
   }
   
+  // Returns the full contents of the runHistory table along with the Username corresponding to each UserID.
   function getFullLeaderboard($pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID, user.Username 
       FROM puzzlemaster.runhistory
@@ -102,6 +103,8 @@
       return $pdo->query($query);
   }
 
+  // Returns the predicted value of the RunID. Used for displaying the predicted runID when creating entires in runHistory.
+  // Might remove as this as we now auto-increment RunID so it doesn't need to be queried.
   function getNextRunID($pdo) {
     $query = "SELECT RunID
       FROM runhistory
@@ -116,6 +119,7 @@
       }
   }
 
+  // Returns a fetched run based off the input RunID.
   function getRunByID($runID, $pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID 
     FROM puzzlemaster.runhistory
@@ -176,6 +180,7 @@
     }
   }
 
+  // Creates a runHistory entry. RunID and TimeOf are computed.
   function createRun($userID, $score, $levelReached, $seed, $mode, $pdo) {
     $query = "INSERT INTO runhistory (UserID, score, levelreached, timeof, seed, modeID)
     VALUES (?, ?, ?, ?, ?, ?);";
@@ -201,6 +206,22 @@
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
       $stmt->execute([$modeName]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
+    }
+  }
+
+  // Updates the contents of one row in runHistory with the exception of RunID and UserID.
+  function editRun($runID, $score, $levelReached, $timeOf, $seed, $modeID, $pdo) {
+    $query = "UPDATE runHistory
+    SET Score = ?, LevelReached = ?, TimeOf = ?, Seed = ?, ModeID = ?
+    WHERE RunID = $runID";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$score, $levelReached, $timeOf, $seed, $modeID]);
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
