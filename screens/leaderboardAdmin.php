@@ -15,16 +15,14 @@
     error_reporting(-1);
 
     require "../dbConnect.php";
-  
+    if (isset($pdo)) {
     ?> 
   <form action="maintenanceMenu.php" method="get">
     <input type="hidden" name="fromLeaderboard">
     <input type="submit" name="createRun" value="New Entry">
   </form>
   <br><?php
-
-  $runHistoryResult = getFullLeaderboard($pdo);
-  
+    }
   ?>
   <form action="maintenanceMenu.php">
     <input type="submit" value="Return">
@@ -41,11 +39,12 @@
       <td class="modeID">ModeID</td>
     </tr><?php 
     // step through the result set one row at a time
-    while ($entry = $runHistoryResult->fetch()) {
+    if (isset($pdo)) {
+      $runHistoryResult = getFullLeaderboard($pdo);
+      while ($entry = $runHistoryResult->fetch()) {
       ?>  
       <tr>
         <td class="links">
-          <!-- TODO: add link to an edit page with parameters for the RunID(?) -->
           <a href="leaderboardAdmin/editEntry.php?runID=<?=$entry['RunID']?>">Edit</a><br>
           <a href="leaderboardAdmin/deleteEntry.php?runID=<?=$entry['RunID']?>">Delete</a><br>
         </td>
@@ -58,7 +57,8 @@
         <td class="modeID"><?= $entry['ModeID'] ?></td>
       </tr><?php
     }
-    ?>
+  }
+  ?>
   </table>
 
   </div>

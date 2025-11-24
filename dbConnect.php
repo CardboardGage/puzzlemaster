@@ -8,7 +8,8 @@
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   } catch (PDOException $e){
-    echo $e->getMessage();
+    // echo $e->getMessage();
+    echo ("<h3 class='error'>Failed to connect to database.</h3>");
   }
 
   function addNewUser($username, $email, $password, $pdo) {
