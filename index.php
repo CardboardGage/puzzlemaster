@@ -25,10 +25,12 @@
       <h3>Logged in?</h3>
       <button id="startBtn" class="mainMenuBtn">Start Run</button> 
       <?php 
-        if (!$_SESSION["loggedIn"] || isset($pdo)) {
+        if (!$_SESSION["loggedIn"] && isset($pdo)) {
       ?> 
       <h3>Need to make an account?</h3>
       <button id="loginBtn" class="mainMenuBtn">Login</button>  
+      <?php } else {?>
+      <button id="logoutBtn" class="mainMenuBtn">Log Out</button>
       <?php } ?> 
       <h3>Change Settings?</h3>
       <button id="configBtn" class="mainMenuBtn">Config</button><?php

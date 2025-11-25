@@ -6,6 +6,7 @@ $maintBtn = $("#maintBtn");
 $backBtn = $("#backBtn");
 $registerBtn = $("#registerBtn");
 $leaderboard = $("#leaderboard");
+$logoutBtn = $("#logoutBtn");
 
 $startBtn.on("click", ()=>{
   console.log("Start Pressed");
@@ -49,4 +50,8 @@ $backBtn.on("click", ()=>{
   $(".loginMenu").hide();
   $(".startMenu").hide();
   $backBtn.hide();
+});
+
+$logoutBtn.on("click", () => {
+  window.location.href = "../logout.php";
 });
