@@ -90,6 +90,7 @@
       exit;
     } else if ($result == 'accepted') {
       $_SESSION["loggedIn"] = true;
+      updateLogin($username, $pdo);
       //redirect to destination page here
       header("Location: index.php");
       exit;

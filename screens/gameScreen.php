@@ -6,8 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gameScreen</title>
-   <script src="../JS/phaser.js"></script>
-    <script src="../JS/phaserTest.js"></script>
+    <link rel="stylesheet" href="../css/gameScreen.css">
 </head>
 <body>
     <div class="wrapper">
@@ -39,46 +38,12 @@
             </aside>
             
             <!-- defining the game area -->
-            <table class="gameArea">
-                <thead>
-                    <tr>
-                        <th scope="col" name="col1"></th>
-                        <th scope="col" name="col2"></th>
-                        <th scope="col" name="col3"></th>
-                        <th scope="col" name="col4"></th>
-                        <th scope="col" name="col5"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row" name="row1">
-                            <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row" name="row2">
-                            <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row" name="row3">
-                            <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row" name="row4">
-                            <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row" name="row5">
-                            <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
-    
+            <div class="gameArea">
+                <script src="../js/phaser.js"></script>
+                <script src="../js/matchLogic.js"></script>
+                <script src="../js/phaserTest.js"></script>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

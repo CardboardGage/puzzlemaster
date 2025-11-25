@@ -1,0 +1,35 @@
+
+body {
+    text-align: center;
+}
+
+input {
+  width: 8rem;
+  font-size: 1rem;
+}
+
+table {
+    width: 50%;
+    border-style: ridge;
+    border-width: 4px;
+    margin: auto;
+}
+
+td {
+    padding: 4px;
+    text-align: left;
+    background-color: lightblue;
+    vertical-align: top;
+}
+
+td.links {
+    font-size: 0.8em;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: bottom;
+    background-color: lightcoral;
+}
+
+ul {
+    list-style-type: none;
+}
