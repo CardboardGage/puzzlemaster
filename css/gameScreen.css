@@ -4,3 +4,59 @@ canvas {
   margin: auto;
   bottom: 62.5rem;
 }
+
+.time, .moves, .score, .level {
+  border: 1px solid black;
+  position: relative;
+  float: right;
+  border-top-left-radius: 15px;
+  margin-right: -12px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.time {
+  background-color: rgba(44, 137, 230, 1);
+  width: 10%;
+  height: 11%;
+  z-index: 2;
+}
+
+.time p, .moves p, .score p, .level p {
+  margin: 0;
+  margin-left: 8px;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+div output {
+  font-size: 450%;
+  text-align: center;
+}
+
+.moves {
+  background-color: rgba(127, 173, 219, 1);
+  width: 10%;
+  height: 11%;
+  z-index: 1;
+}
+
+.score {
+  background-color: rgba(235, 52, 52, 1);
+  width: 10%;
+  height: 11%;
+  z-index: 0;
+}
+
+.level {
+  background-color: black;
+  color: white;
+  position: absolute;
+  right: 0;
+  top: 12%;
+  width: 7%;
+  height: 11%;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 0;
+}
