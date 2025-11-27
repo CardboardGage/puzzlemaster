@@ -91,6 +91,16 @@
     } else if ($result == 'accepted') {
       $_SESSION["loggedIn"] = true;
       updateLogin($username, $pdo);
+      try {
+        $adminStatus = checkAdmin($username, $pdo);
+      } catch (Exception $e) {
+        echo $e->getMessage();
+      }
+
+      if ($adminStatus) {
+        $_SESSION["admin"] = true;
+      }
+      
       //redirect to destination page here
       header("Location: index.php");
       exit;

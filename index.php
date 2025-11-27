@@ -13,7 +13,12 @@
   $_SESSION["state"] = 0;
   if (!isset($_SESSION["loggedIn"])) {
     $_SESSION["loggedIn"] = false;
-  };
+  }
+
+  if (!isset($_SESSION["admin"])) {
+    $_SESSION["admin"] = false;
+  }
+
   require "dbConnect.php";
   usersEmpty($pdo);
 ?>
@@ -36,7 +41,7 @@
       <?php } ?> 
       <h3>Change Settings?</h3>
       <button id="configBtn" class="mainMenuBtn">Config</button><?php
-        if ($_SESSION["loggedIn"] && isset($pdo)) {
+        if ($_SESSION["loggedIn"] && isset($pdo) && $_SESSION["admin"]) {
       ?>
       <h3>Dev tools:</h3>
       <button id="maintBtn" class="mainMenuBtn">Maintenance</button>

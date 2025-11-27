@@ -8,10 +8,17 @@
 
   $method = $_SERVER['REQUEST_METHOD'];
 
-  $_SESSION["loggedIn"] = true;
+  if (!isset($_SESSION["loggedIn"])) {
+    $_SESSION["loggedIn"] = "";
+  }
 
   if (!isset($_SESSION["target"])) {
     $_SESSION["target"] = "";
+  }
+
+  if ($_SESSION['admin'] == false) {
+    header('Location: ../index.php');
+    exit();
   }
 ?>
 

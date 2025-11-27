@@ -62,7 +62,7 @@
     date_default_timezone_set("America/Chicago");
     $date = date("Y-m-d H:i:s");
     $query = "UPDATE `user` SET LastLogin = '$date'
-    WHERE UserID = (SELECT UserID FROM `user` WHERE Username=`$username`)";
+    WHERE username = '$username'";
     echo $query;
     try {
       $pdo->beginTransaction();
@@ -71,7 +71,7 @@
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
-      echo $e->getMessage();
+      throw $e;
     }
   }
 
@@ -271,6 +271,25 @@
         $pdo->rollBack();
         throw $e;
       }
+    }
+  }
+
+  //checks if a user has admin permissions
+  function checkAdmin($username, $pdo) {
+    $query = "SELECT `AdminStatus` FROM `user`
+    WHERE username = '$username'";
+
+    $result = $pdo->query($query);
+
+    if ($result->rowCount() == 0) {
+      throw new Exception("User not found");
+    }
+
+    $adminStatus = $result->fetchColumn();
+    if ($adminStatus == 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 ?> 

@@ -5,6 +5,7 @@
   }
 
   $_SESSION["loggedIn"] = false;
+  $_SESSION["admin"] = false;
 
 
   header("Location: index.php");
