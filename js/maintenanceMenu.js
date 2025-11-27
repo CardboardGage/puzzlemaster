@@ -27,17 +27,14 @@ $createMode.on("click", ()=>{
 });
 
 $backBtn.on("click", ()=>{
-  console.log("back button");
-  window.location.href="maintenanceMenu.php";
+  $("#userDataEditor").hide();
+  $("#runDataGenerator").hide();
+  $("#modeEditor").hide();
+  $dataBtn.show();
+  $backBtn.hide();
+  $return.show();
 });
 
 $return.on("click", ()=>{
   window.location.href = "../index.php";
 })
-
-
-
-$(document).ready(() => {
-  // automatically selects the first option in the dropdown
-  $("#modeSelect").prop("selectedIndex", 0); 
-});
