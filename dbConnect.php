@@ -17,10 +17,10 @@
     $date = date("Y-m-d H:i:s");
     try {
       $pdo->beginTransaction();
-      $query = "INSERT INTO `user` (username, email, `password`, verified, TimeCreated, LastLogin, TutorialFlag)
+      $query = "INSERT INTO `user` (username, email, `password`, verified, TimeCreated, LastLogin, adminStatus)
       VALUES (?,?,?,?,?,?,?);";
       $stmt = $pdo->prepare($query);
-      $stmt->execute([$username, $email, $password, 0, $date, $date, 1]);
+      $stmt->execute([$username, $email, $password, 0, $date, $date, 0]);
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
@@ -154,11 +154,11 @@
     return $result;
   }
 
-  function updateUser($userID, $username, $email, $verified, $tutorialFlag, $pdo) {
-    if ($tutorialFlag) {
-      $tutorialFlag = 1;
+  function updateUser($userID, $username, $email, $verified, $adminStatus, $pdo) {
+    if ($adminStatus == 1) {
+      $adminStatus = 1;
     } else {
-      $tutorialFlag = 0;
+      $adminStatus = 0;
     }
 
     if ($verified) {
@@ -168,12 +168,12 @@
     }
 
     $query = "UPDATE `user`
-    SET username = ?, email = ?, verified = ?, TutorialFlag = ?
+    SET username = ?, email = ?, verified = ?, AdminStatus = ?
     WHERE UserID = $userID";
     try {
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
-      $stmt->execute([$username, $email, $verified, $tutorialFlag]);
+      $stmt->execute([$username, $email, $verified, $adminStatus]);
       $pdo->commit();
     } catch (PDOException $e) {
       $pdo->rollBack();
@@ -241,6 +241,36 @@
     } catch (PDOException $e) {
       $pdo->rollBack();
       throw $e;
+    }
+  }
+
+  //checks if user table is empty and creates a default admin account if true
+  function usersEmpty($pdo) {
+    $query = "SELECT UserID FROM `user`";
+    try {
+      $result = $pdo->query($query);
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
+    }
+
+    if ($result->rowCount() == 0) {
+      $username = "admin";
+      $email = "admin@admin.com";
+      $password = password_hash("puzzlemaster", PASSWORD_DEFAULT);
+      addNewUser($username, $email, $password, $pdo);
+
+      $query = "UPDATE `user` SET AdminStatus = 1
+      WHERE userID = 1";
+      try {
+        $pdo->beginTransaction();
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $pdo->commit();
+      } catch (PDOException $e) {
+        $pdo->rollBack();
+        throw $e;
+      }
     }
   }
 ?> 

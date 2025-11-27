@@ -10,7 +10,7 @@ CREATE TABLE `User` (
     Verified bool,
     TimeCreated dateTime,
     LastLogin dateTime,
-    TutorialFlag bool
+    AdminStatus bool
 );
 
 CREATE TABLE `RunHistory` (
