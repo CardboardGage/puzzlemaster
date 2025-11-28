@@ -805,6 +805,18 @@ function endGame(scene) {
     })
     .setOrigin(0.5);
 
+  //reporting score to the database
+  var sentData = "score=" + scene.totalScore + "&round=" + scene.round;
+  var request = new XMLHttpRequest();
+  request.open("POST", "../scoreReport.php");
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.onreadystatechange = function() {
+    if(request.readyState == 4 && request.status == 200) {
+        alert(request.responseText + " score: " + sentData);
+    }
+  }
+  request.send(sentData);
+
   // One-time click to restart
   overlay.setInteractive();
   overlay.once("pointerdown", () => {
