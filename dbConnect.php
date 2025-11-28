@@ -332,5 +332,34 @@
 
     return $stmt->fetch();
   }
-  
+
+  // Updates the contents of one row in runHistory with the exception of RunID and UserID.
+  function editUser($userID, $username, $email, $verified, $timeCreated, $lastLogin, $adminStatus, $pdo) {
+    $query = "UPDATE `user`
+    SET Username = ?, Email = ?, Verified = ?, TimeCreated = ?, LastLogin = ?, AdminStatus = ?
+    WHERE UserID = $userID";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute([$username, $email, $verified, $timeCreated, $lastLogin, $adminStatus]);
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
+    }
+  }
+
+  // Removes a user from 'user' by its UserID
+  function deleteUser($userID, $pdo) {
+    $query = "DELETE FROM `user` WHERE UserID = $userID";
+    try {
+      $pdo->beginTransaction();
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $pdo->commit();
+    } catch (PDOException $e) {
+      $pdo->rollBack();
+      throw $e;
+    }
+  }
 ?> 

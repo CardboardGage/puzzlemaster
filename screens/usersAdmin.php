@@ -51,10 +51,10 @@
         <td class="userID"><?= $entry['UserID'] ?></td>
         <td class="username"><?= $entry['Username'] ?></td>
         <td class="email"><?= $entry['Email'] ?></td>
-        <td class="verified"><?= $entry['Verified'] ?></td>
+        <td class="verified"><?= (($entry['Verified'] == 1) ? "Verified":"Not Verified"); ?></td>
         <td class="timeCreated"><?= $entry['TimeCreated'] ?></td>
         <td class="lastLogin"><?= $entry['LastLogin'] ?></td>
-        <td class="adminStatus"><?= $entry['AdminStatus'] ?></td>
+        <td class="adminStatus"><?= (($entry['AdminStatus'] == 1) ? "Admin":"User"); ?></td>
       </tr><?php
     }
   }

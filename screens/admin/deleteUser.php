@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delete Run</title>
+  <title>Delete User</title>
   
 <?php 
 ini_set('display_errors', '1');
@@ -12,12 +12,12 @@ error_reporting(-1);
 require '../../sanitize.php';
 require '../../dbConnect.php';
 
-$runData = getRunByID(sanitizeInt(INPUT_GET, 'runID'), $pdo);
+$userData = getUserByID(sanitizeInt(INPUT_GET, 'userID'), $pdo);
 $confirm = sanitizeString(INPUT_POST, 'confirm');
 $cancel = sanitizeString(INPUT_POST, 'cancel');
 
-if (!isset($runData) || isset($cancel)) {
-  header("Location: ../leaderboardAdmin.php");
+if (!isset($userData) || isset($cancel)) {
+  header("Location: ../usersAdmin.php");
 }
 
 ?>
@@ -25,18 +25,19 @@ if (!isset($runData) || isset($cancel)) {
 </head>
 <body>
   <?php  
-  // Pushes changes and redirects back to leaderboardAdmin
+  // Pushes changes and redirects back to usersAdmin
   if (isset($confirm)) {
-    $runID = trim(sanitizeInt(INPUT_GET, 'runID'));
+    $userID = trim(sanitizeInt(INPUT_GET, 'userID'));
 
-    deleteRun($runID, $pdo);
-    header("Location: ../leaderboardAdmin.php");
+    deleteUser($userID, $pdo);
+    header("Location: ../usersAdmin.php");
 
   } else {
   ?>
   <form action="" method="post">
     <label>Are you sure?</label><br>
-    <label>Delete Run <?= $runData['RunID'] ?>?</label><br>
+    <label>WARNING: This will also delete all runHistory of this user.</label><br>
+    <label>Delete User <?= $userData['Username'] ?>?</label><br>
     <input type="submit" value="Yes" name="confirm">
     <input type="submit" value="No" name="cancel">
   </form><?php

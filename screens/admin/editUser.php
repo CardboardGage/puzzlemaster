@@ -44,8 +44,8 @@ if (!isset($userData) || isset($cancel)) {
     $timeCreated = trim(sanitizeString(INPUT_POST, 'timeCreated'));
     $lastLogin = trim(sanitizeString(INPUT_POST, 'lastLogin'));
     $adminStatus = isset($_POST['adminStatus'])?trim(sanitizeInt(INPUT_POST, 'adminStatus')):0;
-    // replace with editUser
-    // editRun($runID, $score, $level, $timeOf, $seed, $mode, $pdo);
+    
+    editUser($userID, $username, $email, $verified, $timeCreated, $lastLogin, $adminStatus, $pdo);
     header("Location: ../usersAdmin.php");
 
   } else {
