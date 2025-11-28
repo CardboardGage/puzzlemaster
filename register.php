@@ -83,6 +83,11 @@
           //adds user to the database
           addNewuser($username, $email, $password, $pdo);
           $_SESSION['loggedIn'] = true;
+
+          //set userID
+          $userID = getUserId($username, $pdo);
+          $_SESSION["userID"] = $userID["userID"];
+          
           //redirect to the main page here
           header("Location: index.php");
           exit;

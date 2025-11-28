@@ -1,8 +1,14 @@
 <?php 
   require 'dbConnect.php';
+  session_start();
   $score = $_POST["score"];
   $levelReached = $_POST["round"];
-  $userID = 1;
+
+  if (!isset($_SESSION["userID"])) {
+    $userID = 0;
+  } else {
+    $userID = $_SESSION["userID"];
+  }
   $seed = 0;
   $mode = 1;
 
@@ -11,5 +17,4 @@
     createRun($userID, $score, $levelReached, $seed, $mode, $pdo);
   } catch (PDOException $e) {
     echo $e->getMessage();
-    throw $e;
   }

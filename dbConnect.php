@@ -293,5 +293,22 @@
     }
   }
 
+  //gets userID based on provided username
+  function getUserId($username, $pdo) {
+    $query = "SELECT userID FROM `user`
+    WHERE Username='$username'";
+
+    try {
+      $result = $pdo->query($query);
+    } catch (PDOException $e) {
+      throw $e;
+    }
+
+    if ($result->rowCount() == 1) {
+      return $result->fetch(PDO::FETCH_ASSOC);
+    } else {
+      throw new Exception("Incorrect number of results");
+    }
+  }
   
 ?> 
