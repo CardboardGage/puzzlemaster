@@ -48,6 +48,9 @@
         <form action="" method="get">
           <input type="submit" id="editUserBtn" class="databBtn" value="Edit User Data" name="editUser">
         </form>
+        <form action="usersAdmin.php" method="post">
+          <input type="submit" id="userListBtn" class="dataBtn" value="View Users" name="userList">
+        </form>
         <form action="" method="get">
           <input type="submit" id="createRunBtn" class="dataBtn" value="Create Run Data" name="createRun">
         </form>

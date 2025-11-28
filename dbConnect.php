@@ -244,9 +244,9 @@
     }
   }
 
-  //checks if user table is empty and creates a default admin account if true
-  function usersEmpty($pdo) {
-    $query = "SELECT UserID FROM `user`";
+  // Checks if the user table has an admin user. if there is none than it creates a default admin account.
+  function noAdmin($pdo) {
+    $query = "SELECT UserID FROM `user` WHERE AdminStatus = 1";
     try {
       $result = $pdo->query($query);
     } catch (PDOException $e) {
@@ -309,6 +309,28 @@
     } else {
       throw new Exception("Incorrect number of results");
     }
+  }
+
+  // Returns the full contents of the user table.
+  function getAllUsers($pdo) {
+    $query = "SELECT UserID, Username, Email, Verified, TimeCreated, LastLogin, AdminStatus 
+      FROM `user`
+      ORDER BY UserID ASC";
+
+      return $pdo->query($query);
+  }
+
+  // Returns user data based off the input UserID.
+  function getUserByID($userID, $pdo) {
+    $query = "SELECT UserID, Username, Email, Verified, TimeCreated, LastLogin, AdminStatus 
+    FROM `user`
+    WHERE UserID = ?
+    LIMIT 1";
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$userID]);
+
+    return $stmt->fetch();
   }
   
 ?> 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleMaster - Leaderboard Admin Access</title>
 
-  <link rel="stylesheet" href="../css/leaderboardAdmin.css">
+  <link rel="stylesheet" href="../css/AdminAccess.css">
 
 </head>
 <body>
@@ -45,8 +45,8 @@
       ?>  
       <tr>
         <td class="links">
-          <a href="leaderboardAdmin/editEntry.php?runID=<?=$entry['RunID']?>">Edit</a><br>
-          <a href="leaderboardAdmin/deleteEntry.php?runID=<?=$entry['RunID']?>">Delete</a><br>
+          <a href="admin/editEntry.php?runID=<?=$entry['RunID']?>">Edit</a><br>
+          <a href="admin/deleteEntry.php?runID=<?=$entry['RunID']?>">Delete</a><br>
         </td>
         <td class="runID"><?= $entry['RunID'] ?></td>
         <td class="userID"><?= $entry['Username'] ?> (UID: <?= $entry['UserID'] ?>)</td>
