@@ -1,11 +1,37 @@
+    <?php 
+      $modes = getModes($pdo);
+      $method = $_SERVER['REQUEST_METHOD'];
+      if ($method == 'GET') {
+    ?> 
     <div class="buttons configMenu">
       <div class="option">
-        <label for="set1">Setting 1</label>      
-        <input type="checkbox" name="set1" id="">
-      </div>
-      <br> 
-      <div class="option">
-        <label for="set2">Setting 2</label>      
-        <input type="checkbox" name="set2" id="">
+        <form action="" method="post">
+          <label for="seed">Run Seed:</label>
+          <input type="text" name="seed">
+          <label for="mode">Game Mode:</label>
+          <?php while ($mode = $modes->fetch(PDO::FETCH_ASSOC)) {?>
+          <input type="radio" name="mode" value="<?= $mode["ModeID"] ?>">
+          <label for="<?= $mode["ModeID"] ?>"><?= $mode["Mode"] ?></label>
+          <?php } ?>
+          <input type="submit" value="Save">
+        </form>
       </div>
     </div>
+
+    <?php } else if ($method == "POST") {
+      if (!isset($_SESSION['seed'])) {
+        $_SESSION['seed'] = "";
+      }
+      if (!isset($_SESSION["modeID"])) {
+        $_SESSION["modeID"] = "";
+      }
+      if ($_POST["seed"]) {
+        $_SESSION["seed"] = $_POST["seed"];
+      }
+      if ($_POST['mode']) {
+        $_SESSION['mode'] = $_POST['mode'];
+      }
+
+      header('Location: index.php');
+      exit;
+    }
