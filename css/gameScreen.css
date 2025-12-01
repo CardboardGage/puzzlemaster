@@ -5,7 +5,12 @@ canvas {
   bottom: 62.5rem;
 }
 
-.time, .moves, .score, .level {
+header {
+  display: flex;
+  justify-content: center;
+}
+
+.level, .moves, .score, .target {
   border: 1px solid black;
   position: relative;
   float: right;
@@ -14,16 +19,16 @@ canvas {
   display: flex;
   flex-direction: column;
   padding: 5px;
+  align-items: center;
 }
 
-.time {
-  background-color: rgba(44, 137, 230, 1);
+.level {
+  background-color: rgba(76, 36, 179);
   width: 10%;
   height: 11%;
-  z-index: 2;
 }
 
-.time p, .moves p, .score p, .level p {
+.level p, .moves p, .score p, .target p {
   margin: 0;
   margin-left: 8px;
   font-size: 150%;
@@ -36,27 +41,25 @@ div output {
 }
 
 .moves {
-  background-color: rgba(127, 173, 219, 1);
+  background-color: rgba(44, 137, 230, 1);
   width: 10%;
   height: 11%;
-  z-index: 1;
 }
 
 .score {
   background-color: rgba(235, 52, 52, 1);
   width: 10%;
   height: 11%;
-  z-index: 0;
+  z-index: -1;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
 }
 
-.level {
-  background-color: black;
-  color: white;
-  position: absolute;
-  right: 0;
-  top: 12%;
-  width: 7%;
+.target {
+  background-color: rgba(127, 173, 219, 1);
+  width: 10%;
   height: 11%;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 0;
+  z-index: 0;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
 }
