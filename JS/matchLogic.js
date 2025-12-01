@@ -312,7 +312,71 @@ function findMatches(scene) {
         }
     }
 
+    // Diagonal Matches 
+    for(let col = 0; col < COLS; col++){
+        let run = [board[1][1]];
+        for(let row = 0; row < ROWS; row++){
+            let current = board[row][col];
+            let previous = board[row - 1][col - 1];
+            let currentGem = current.getData('key');
+            let diagonals = findAntiDiagonals(scene,row);
+            let antiDiagonals = findAntiDiagonals(scene,row);
+
+            while (!isOutOfBounds(row,col,board)){
+                diagonals.forEach((gem) => {
+                    if(gem.getData('key') == currentGem){
+                        run.push(gem);
+                    } else {
+                        if(run.length >= 3){
+                            matches.push(run.slice());
+                        }
+                    }
+                })
+                antiDiagonals.forEach((gem) => {
+                    if(gem.getData('key') == currentGem){
+                        run.push(current);
+                    } else {
+                        if (run.length >= 3) {
+                            matches.push(run.slice());
+                        }
+                    }
+                })
+            } 
+            if(run.length >= 3) {
+                matches.push(run.slice());
+            }
+            run = [current];            
+        }
+    }
+
     return matches;
+}
+
+// Out of bounds helper function
+function isOutOfBounds(row, col, matrix) {
+    if( (row + col) > matrix.length || (row + col) < 0){
+        return true;
+    }
+}
+
+// diagonal helper fuctions
+function findDiagonals(scene,row){
+const board = scene.board;
+let diagonals = [];
+for(i = row; i < board.length;i++){
+    diagonals.push(board[i][i]);
+}
+return diagonals;
+}
+function findAntiDiagonals(scene,row){
+    const board = scene.board;
+    let antiDiagonals = [];
+    let boardSize = board.length;
+    for(i = row; i < board.length;i++){
+        let j = boardSize - 1 - i;
+        antiDiagonals.push(board[i][j]);
+    }
+    return antiDiagonals;
 }
 
 function handleMatches(scene, matches) {
