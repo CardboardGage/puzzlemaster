@@ -9,12 +9,12 @@
   } else {
     $userID = $_SESSION["userID"];
   }
-  $seed = 0;
-  $mode = 1;
+  $seed = $_SESSION['seed'];
+  $mode = $_SESSION['mode'];
 
   //TODO: get seed and mode data instead of placeholders
   try {
     createRun($userID, $score, $levelReached, $seed, $mode, $pdo);
   } catch (PDOException $e) {
-    echo $e->getMessage();
+    throw $e;
   }

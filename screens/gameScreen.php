@@ -1,6 +1,9 @@
 <php> </php>
 <?php 
   session_start();
+  if (!isset($_SESSION["seed"])) {
+    $_SESSION['seed'] = "";
+  }
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,5 +64,6 @@
             </div>
         </main>
     </div>
+    <aside hidden id="seed"><?= $_SESSION['seed'] ?></aside>
 </body>
 </html>
