@@ -26,6 +26,8 @@ function preload() {
   // Background board image
   this.load.image("gamegrid", "../assets/gamepieces/gamegrid.jpg");
 
+  this.load.image('caveWall', '../assets/background/caveWall.jpg');
+
   // Gem images
   this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.jpg");
   this.load.image("squareGem", "../assets/gamepieces/gamepiece02.jpg");
@@ -40,10 +42,12 @@ function preload() {
 
 function create() {
   // Draw background and size it to match the grid area
-  this.add
-    .image(0, 0, "gamegrid")
+ // Full-screen cave wall background
+this.add.image(0, 0, 'caveWall')
     .setOrigin(0, 0)
-    .setDisplaySize(COLS * TILE_SIZE, ROWS * TILE_SIZE);
+    .setDisplaySize(this.scale.width, this.scale.height);
+
+    this.rng = new Phaser.Math.RandomDataGenerator(['12345']);
 
   // Game state
   this.round = 1;
@@ -216,10 +220,10 @@ function createRandomGem(scene, row, col) {
   let powerupType = null;
 
   // 🔹 Decide if this spawn is a power-up
-  const roll = Phaser.Math.Between(1, 100);
+  const roll = scene.rng.between(1, 100);
   if (roll <= POWERUP_CHANCE_PERCENT) {
     // choose one of the 3 power-up types
-    const choice = Phaser.Utils.Array.GetRandom(POWERUP_TYPES);
+    const choice = scene.rng.pick(POWERUP_TYPES);
     if (choice === "gold") {
       key = "goldPowerup";
       type = "powerup";
@@ -237,7 +241,7 @@ function createRandomGem(scene, row, col) {
 
   // If not chosen as power-up, or something went wrong, use a normal gem
   if (!key) {
-    key = Phaser.Utils.Array.GetRandom(GEM_KEYS);
+    key = scene.rng.pick(GEM_KEYS);
     type = "gem";
     powerupType = null;
   }
@@ -804,17 +808,6 @@ function endGame(scene) {
       fill: "#ffffff",
     })
     .setOrigin(0.5);
-
-  //reporting score to the database
-  var sentData = "score=" + scene.totalScore + "&round=" + scene.round;
-  var request = new XMLHttpRequest();
-  request.open("POST", "../scoreReport.php");
-  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  request.onreadystatechange = function() {
-    if(request.readyState == 4 && request.status == 200) {
-    }
-  }
-  request.send(sentData);
 
   // One-time click to restart
   overlay.setInteractive();
