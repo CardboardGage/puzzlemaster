@@ -2,9 +2,10 @@
   if (!session_id()) {
     session_start();
   }
-  if (!isset($_SESSION["inUse"]) || !isset($_SESSION["emailWrong"])) {
+  if (!isset($_SESSION["inUse"]) || !isset($_SESSION["emailWrong"]) || !isset($_SESSION["loggedIn"])) {
     $_SESSION["inUse"] = "";
     $_SESSION["emailWrong"] = "";
+    $_SESSION["loggedIn"] = "";
   }
 
   require 'sanitize.php';
@@ -81,6 +82,12 @@
           
           //adds user to the database
           addNewuser($username, $email, $password, $pdo);
+          $_SESSION['loggedIn'] = true;
+
+          //set userID
+          $userID = getUserId($username, $pdo);
+          $_SESSION["userID"] = $userID["userID"];
+          
           //redirect to the main page here
           header("Location: index.php");
           exit;

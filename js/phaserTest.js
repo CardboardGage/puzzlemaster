@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    height: GAME_HIEGHT,
-    width: GAME_WIDTH,
+    width: 800,
+    height: 600,
     scene: { preload, create, update }
 };
 

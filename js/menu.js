@@ -5,10 +5,13 @@ $configBtn = $("#configBtn");
 $maintBtn = $("#maintBtn");
 $backBtn = $("#backBtn");
 $registerBtn = $("#registerBtn");
+$leaderboard = $("#leaderboard");
+$logoutBtn = $("#logoutBtn");
 
 $startBtn.on("click", ()=>{
   console.log("Start Pressed");
   $(".mainMenu").hide();
+  $leaderboard.hide();
   $(".startMenu").show();
   $backBtn.show();
   window.location.href = "../screens/gameScreen.php";
@@ -17,6 +20,7 @@ $startBtn.on("click", ()=>{
 $loginBtn.on("click", ()=>{
   console.log("Login Pressed");
   $(".mainMenu").hide();
+  $leaderboard.hide();
   $(".loginMenu").show();
   $(".startMenu").hide();
   // $backBtn.show();
@@ -26,6 +30,7 @@ $loginBtn.on("click", ()=>{
 $configBtn.on("click", ()=>{
   console.log("Config Pressed");
   $(".mainMenu").hide();
+  $leaderboard.hide();
   $(".configMenu").show();
   $(".startMenu").hide();
   $backBtn.show();
@@ -34,14 +39,19 @@ $configBtn.on("click", ()=>{
 $maintBtn.on("click", ()=>{
   console.log("Maint Pressed");
   $(".mainMenu").hide();
-  // $backBtn.show();
+  $leaderboard.hide();
   window.location.href = "../screens/maintenanceMenu.php";
 });
 
 $backBtn.on("click", ()=>{
   $(".mainMenu").show();
+  $leaderboard.show();
   $(".configMenu").hide();
   $(".loginMenu").hide();
   $(".startMenu").hide();
   $backBtn.hide();
+});
+
+$logoutBtn.on("click", () => {
+  window.location.href = "../logout.php";
 });
