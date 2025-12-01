@@ -18,22 +18,23 @@
             <input type="button" value="menu">
             <!-- just using placeholders right now 
             for whatever we hook these outputs up to -->
-            <div class="time">
-                <p>Time</p>
-                <output name="Time: " for="time">00:00</output>
+            <div class="level">
+                <p>Level</p>
+                <output name="Level: " for="level">01</output>
             </div>
             <div class="moves">
                 <p>Moves</p>
-                <output name="Moves: " for="moves">000</output>
+                <output name="Moves: " for="moves">00</output>
+            </div>
+            <div class="target">
+              <p>Target</p>
+              <output name="Target: " for="target">00</output>
             </div>
             <div class="score">
               <p>Score</p>
-              <output name="Score: " for="score">00000</output>
+              <output name="Score: " for="score">0000</output>
             </div>
-            <div class="level">
-              <p>Level</p>
-              <output name="Lvl: " for="level">01</output>
-            </div>
+            
         </header>
         <main>
             <aside>
