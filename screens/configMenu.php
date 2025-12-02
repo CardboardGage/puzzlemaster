@@ -7,8 +7,9 @@
       <div class="option">
         <form action="" method="post">
           <label for="seed">Run Seed:</label>
-          <input type="text" name="seed" maxlength="16">
-          <input type="submit" value="Save">
+          <input type="text" name="seed" maxlength="16"></input>
+          <input type="submit" value="Save" class="seedSave">
+          <button id="backBtn" hidden=true><- Back</button>
         </form>
       </div>
     </div>
