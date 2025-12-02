@@ -1,14 +1,38 @@
 canvas {
-  position: relative;
-  display: block; 
-  margin: auto;
-  bottom: 62.5rem;
+    margin-top: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 header {
   display: flex;
   justify-content: center;
 }
+
+aside {
+    position: absolute;     /* sticks to the left */
+    left: 1rem;             /* a little spacing from the browser edge */
+    top: 10rem;             /* adjust to your layout */
+    display: flex;
+    flex-direction: column; /* vertical layout */
+    gap: 1rem;              /* spacing between gem icons */
+    align-items: center;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside ul li img {
+    width: 48px;          /* adjust size */
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
 
 .level, .moves, .score, .target {
   border: 1px solid black;
@@ -63,3 +87,6 @@ div output {
   border-top-left-radius: 0px;
   border-top-right-radius: 15px;
 }
+
+
+

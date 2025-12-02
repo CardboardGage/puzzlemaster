@@ -11,7 +11,7 @@
   <table>
     <tr>
       <td class="userID"><b>User</b></td>
-      <td class="scoreLabel"><b>Score</b></td>
+      <td class="score"><b>Score</b></td>
     </tr><?php 
     if (isset($pdo)) {
       $runHistoryResult = getFullLeaderboard($pdo);
