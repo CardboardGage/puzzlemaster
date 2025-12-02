@@ -29,11 +29,11 @@ function preload() {
   this.load.image('caveWall', '../assets/background/caveWall.jpg');
 
   // Gem images
-  this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.jpg");
-  this.load.image("squareGem", "../assets/gamepieces/gamepiece02.jpg");
-  this.load.image("diamondGem", "../assets/gamepieces/gamepiece03.jpg");
-  this.load.image("hexagonGem", "../assets/gamepieces/gamepiece04.jpg");
-  this.load.image("octogonGem", "../assets/gamepieces/gamepiece05.jpg");
+  this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.png");
+  this.load.image("squareGem", "../assets/gamepieces/gamepiece02.png");
+  this.load.image("diamondGem", "../assets/gamepieces/gamepiece03.png");
+  this.load.image("hexagonGem", "../assets/gamepieces/gamepiece04.png");
+  this.load.image("octogonGem", "../assets/gamepieces/gamepiece05.png");
 
   this.load.image("goldPowerup", "../assets/gamepieces/goldPowerup.png");
   this.load.image("pickaxePowerup", "../assets/gamepieces/pickaxePowerup.png");
@@ -440,10 +440,6 @@ function swapGems(scene, g1, g2, isReversing) {
   let c1 = g1.getData("col");
   let r2 = g2.getData("row");
   let c2 = g2.getData("col");
-  console.log("g1 is " + g1);
-  console.log("g2 is " + g2);
-  console.log("r1 is " + r1);
-  console.log("c1 is " + c1);
   let d1 = [[r1],[c1]];
   let d2 = [[r2],[c2]];
   // Swap in the logical board array
@@ -553,42 +549,42 @@ function findMatches(scene) {
   }
 
 // Diagonal Matches 
-    // for(let col = 0, row = 0; col < COLS & row < ROWS; col++, row++){
-    //     let run = [board[1][1]];
-    //     console.log(run);
-    //     for(let row = 1; row < ROWS; row++){
-    //         let current = board[row][col];
-    //         let next = board[row + 1][col + 1];
-    //         let currentGem = current.getData('key');
-    //         let diagonals = findAntiDiagonals(scene,row);
-    //         let antiDiagonals = findAntiDiagonals(scene,row);
+    for(let col = 0, row = 0; col < COLS & row < ROWS; col++, row++){
+        let run = [board[1][1]];
+        console.log(run);
+        // for(let row = 1; row < ROWS; row++){
+        //     let current = board[row][col];
+        //     let next = board[row + 1][col + 1];
+        //     let currentGem = current.getData('key');
+        //     let diagonals = findAntiDiagonals(scene,row);
+        //     let antiDiagonals = findAntiDiagonals(scene,row);
 
-    //         while (!isOutOfBounds(row,col,run)){
-    //             diagonals.forEach((gem) => {
-    //                 if(gem.getData('key') == currentGem){
-    //                     run.push(gem);
-    //                 } else {
-    //                     if(run.length >= 3){
-    //                         matches.push(run.slice());
-    //                     }
-    //                 }
-    //             })
-    //             antiDiagonals.forEach((gem) => {
-    //                 if(gem.getData('key') == currentGem){
-    //                     run.push(gem);
-    //                 } else {
-    //                     if (run.length >= 3) {
-    //                         matches.push(run.slice());
-    //                     }
-    //                 }
-    //             })
-    //         } 
-    //         if(run.length >= 3) {
-    //             matches.push(run.slice());
-    //         }
-    //         run = [next];            
-    //     }
-    // }
+        //     while (!isOutOfBounds(row,col,run)){
+        //         diagonals.forEach((gem) => {
+        //             if(gem.getData('key') == currentGem){
+        //                 run.push(gem);
+        //             } else {
+        //                 if(run.length >= 3){
+        //                     matches.push(run.slice());
+        //                 }
+        //             }
+        //         })
+        //         antiDiagonals.forEach((gem) => {
+        //             if(gem.getData('key') == currentGem){
+        //                 run.push(gem);
+        //             } else {
+        //                 if (run.length >= 3) {
+        //                     matches.push(run.slice());
+        //                 }
+        //             }
+        //         })
+        //     } 
+        //     if(run.length >= 3) {
+        //         matches.push(run.slice());
+        //     }
+        //     run = [next];            
+        // }
+    }
 
     return matches;
 }

@@ -43,15 +43,15 @@
             <aside>
                 <!-- //// How pieces work ///// -->
                 <ul>
-                    <li><img src="../assets/gamepieces/gamepiece01.jpg" 
+                    <li><img src="../assets/gamepieces/gamepiece01.png" 
                     alt="triangle gem"></li>
-                    <li><img src="../assets/gamepieces/gamepiece02.jpg" 
+                    <li><img src="../assets/gamepieces/gamepiece02.png" 
                     alt="square gem"></li>
-                    <li><img src="../assets/gamepieces/gamepiece03.jpg"
+                    <li><img src="../assets/gamepieces/gamepiece03.png"
                     alt="daimond gem"></li>
-                    <li><img src="../assets/gamepieces/gamepiece04.jpg" 
+                    <li><img src="../assets/gamepieces/gamepiece04.png" 
                     alt="hexagon gem"></li>
-                    <li><img src="../assets/gamepieces/gamepiece05.jpg" 
+                    <li><img src="../assets/gamepieces/gamepiece05.png" 
                     alt="octagon gem"></li>
                 </ul>
             </aside>
