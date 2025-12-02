@@ -10,8 +10,8 @@
   <div id="leaderboard">
   <table>
     <tr>
-      <td class="userID">User</td>
-      <td class="score">Score</td>
+      <td class="userID"><b>User</b></td>
+      <td class="score"><b>Score</b></td>
     </tr><?php 
     if (isset($pdo)) {
       $runHistoryResult = getFullLeaderboard($pdo);
