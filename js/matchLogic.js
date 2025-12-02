@@ -355,8 +355,8 @@ function handleGemDown(pointer, gem) {
   const c2 = g2.getData("col");
 
   const isAdjacent =
-    (r1 === r2 && Math.abs(c1 - c2) === 1) ||
-    (c1 === c2 && Math.abs(r1 - r2) === 1);
+    (Math.abs(c1 - c2) === 1) ||
+    (Math.abs(r1 - r2) === 1);
 
   if (!isAdjacent) {
     shakeGem(scene, gem);
