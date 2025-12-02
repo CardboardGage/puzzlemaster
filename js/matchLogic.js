@@ -306,21 +306,21 @@ function handleGemDown(pointer, gem) {
     return;
   }
 
-  const g1 = scene.selectedGem;
-  const g2 = gem;
+  let g1 = scene.selectedGem;
+  let g2 = gem;
 
   // Clear highlight
   g1.clearTint();
   scene.selectedGem = null;
 
-  const r1 = g1.getData("row");
-  const c1 = g1.getData("col");
-  const r2 = g2.getData("row");
-  const c2 = g2.getData("col");
+  let r1 = g1.getData("row");
+  let c1 = g1.getData("col");
+  let r2 = g2.getData("row");
+  let c2 = g2.getData("col");
 
   const isAdjacent =
-    (r1 === r2 && Math.abs(c1 - c2) === 1) ||
-    (c1 === c2 && Math.abs(r1 - r2) === 1);
+    (Math.abs(c1 - c2) === 1) ||
+    (Math.abs(r1 - r2) === 1);
 
   if (!isAdjacent) {
     shakeGem(scene, gem);
@@ -429,15 +429,22 @@ function shakeGem(scene, gem) {
 }
 
 function swapGems(scene, g1, g2, isReversing) {
-  const r1 = g1.getData("row");
-  const c1 = g1.getData("col");
-  const r2 = g2.getData("row");
-  const c2 = g2.getData("col");
-
+  let r1 = g1.getData("row");
+  let c1 = g1.getData("col");
+  let r2 = g2.getData("row");
+  let c2 = g2.getData("col");
+  console.log("g1 is " + g1);
+  console.log("g2 is " + g2);
+  console.log("r1 is " + r1);
+  console.log("c1 is " + c1);
+  let d1 = [[r1],[c1]];
+  let d2 = [[r2],[c2]];
   // Swap in the logical board array
   scene.board[r1][c1] = g2;
   scene.board[r2][c2] = g1;
-
+  let temp = d1;
+  d1 = d2;
+  d2 = temp;
   // Swap stored row/col values
   g1.setData("row", r2);
   g1.setData("col", c2);
@@ -538,9 +545,73 @@ function findMatches(scene) {
     }
   }
 
-  return matches;
+// Diagonal Matches 
+    // for(let col = 0, row = 0; col < COLS & row < ROWS; col++, row++){
+    //     let run = [board[1][1]];
+    //     console.log(run);
+    //     for(let row = 1; row < ROWS; row++){
+    //         let current = board[row][col];
+    //         let next = board[row + 1][col + 1];
+    //         let currentGem = current.getData('key');
+    //         let diagonals = findAntiDiagonals(scene,row);
+    //         let antiDiagonals = findAntiDiagonals(scene,row);
+
+    //         while (!isOutOfBounds(row,col,run)){
+    //             diagonals.forEach((gem) => {
+    //                 if(gem.getData('key') == currentGem){
+    //                     run.push(gem);
+    //                 } else {
+    //                     if(run.length >= 3){
+    //                         matches.push(run.slice());
+    //                     }
+    //                 }
+    //             })
+    //             antiDiagonals.forEach((gem) => {
+    //                 if(gem.getData('key') == currentGem){
+    //                     run.push(gem);
+    //                 } else {
+    //                     if (run.length >= 3) {
+    //                         matches.push(run.slice());
+    //                     }
+    //                 }
+    //             })
+    //         } 
+    //         if(run.length >= 3) {
+    //             matches.push(run.slice());
+    //         }
+    //         run = [next];            
+    //     }
+    // }
+
+    return matches;
 }
 
+// Out of bounds helper function
+function isOutOfBounds(row, col, matrix) {
+    if( (row + col) > matrix.length || (row + col) < 0){
+        return true;
+    }
+}
+
+// diagonal helper fuctions
+function findDiagonals(scene,row){
+const board = scene.board;
+let diagonals = [];
+for(i = row; i < board.length;i++){
+    diagonals.push(board[i][i]);
+}
+return diagonals;
+}
+function findAntiDiagonals(scene,row){
+    const board = scene.board;
+    let antiDiagonals = [];
+    let boardSize = board.length;
+    for(i = row; i < board.length;i++){
+        let j = boardSize - 1 - i;
+        antiDiagonals.push(board[i][j]);
+    }
+    return antiDiagonals;
+}
 function handleMatches(scene, matches) {
   const board = scene.board;
   const toRemove = new Set();
