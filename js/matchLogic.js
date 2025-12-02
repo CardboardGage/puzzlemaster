@@ -522,8 +522,7 @@ function swapGems(scene, g1, g2, isReversing) {
   let c1 = g1.getData("col");
   let r2 = g2.getData("row");
   let c2 = g2.getData("col");
-  let d1 = [[r1],[c1]];
-  let d2 = [[r2],[c2]];
+
   // Swap in the logical board array
   scene.board[r1][c1] = g2;
   scene.board[r2][c2] = g1;
