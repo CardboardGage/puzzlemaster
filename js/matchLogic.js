@@ -41,13 +41,20 @@ function preload() {
 }
 
 function create() {
+  let seedTag = document.querySelector('#seed');
+  let seed = seedTag.innerHTML;
   // Draw background and size it to match the grid area
  // Full-screen cave wall background
-this.add.image(0, 0, 'caveWall')
+  this.add.image(0, 0, 'caveWall')
     .setOrigin(0, 0)
     .setDisplaySize(this.scale.width, this.scale.height);
 
-    this.rng = new Phaser.Math.RandomDataGenerator(['12345']);
+    if (seed) {
+      this.rng = new Phaser.Math.RandomDataGenerator([seed]);
+    } else {
+      this.rng = new Phaser.Math.RandomDataGenerator();
+    }
+    
 
   // Game state
   this.round = 1;
@@ -844,6 +851,16 @@ function checkRoundEnd(scene) {
 function endGame(scene) {
   scene.isGameOver = true;
   scene.isProcessingMove = false;
+
+  let sentData = "score=" + scene.totalScore + "&round=" + scene.round;
+  let request = new XMLHttpRequest();
+  request.open("POST", "../scoreReport.php");
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.onreadystatechange = function() {
+    if(request.readyState == 4 && request.status == 200) {
+    }
+  }
+  request.send(sentData);
 
   const w = scene.scale.width;
   const h = scene.scale.height;
