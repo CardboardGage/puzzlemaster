@@ -24,7 +24,7 @@
     });
   </script>
 
-  <div class="leaderboard">
+  <div id="leaderboard">
   <table>
     <?php 
     if ($method == "GET" && isset($_GET["seeded"])) {?>
