@@ -12,6 +12,7 @@
     echo ("<h3 class='error'>Failed to connect to database.</h3>");
   }
 
+  //adds a new user to the database
   function addNewUser($username, $email, $password, $pdo) {
     date_default_timezone_set("America/Chicago");
     $date = date("Y-m-d H:i:s");
@@ -28,6 +29,7 @@
     }
   }
 
+  //checks if the username or email is already in use
   function checkAvailability($username, $email, $pdo) {
     $query = "SELECT username, email FROM `user`
     WHERE username = '$username' OR email='$email'";
@@ -40,6 +42,7 @@
     }
   }
 
+  //checks if login information is valid
   function checkUser($username, $password, $pdo) {
     $query = "SELECT `password` FROM `user`
     WHERE username = '$username'";
@@ -58,6 +61,7 @@
     }
   }
 
+  //updates the lastLogin field when an account is logged into
   function updateLogin($username, $pdo) {
     date_default_timezone_set("America/Chicago");
     $date = date("Y-m-d H:i:s");
@@ -75,24 +79,6 @@
     }
   }
 
-  function getUserHighScores($username, $pdo) {
-    $query = "SELECT score FROM runhistory
-    WHERE UserID = (
-      SELECT UserID FROM `user`
-      WHERE username = `$username`
-      )
-    ORDER BY score DESC";
-
-    $result = $pdo->query($query);
-  }
-
-  function getHighScores($pdo) {
-    $query = "SELECT score, username 
-    FROM runhistory INNER JOIN `user` USING(UserID)
-    ORDER BY score DESC";
-
-    $result = $pdo->query($query);
-  }
   
   // Returns the full contents of the runHistory table along with the Username corresponding to each UserID.
   function getFullLeaderboard($pdo) {
@@ -134,11 +120,13 @@
     return $stmt->fetch();
   }
 
+  //returns all gamemodes 
  function getModes($pdo) {
     $query = "SELECT ModeID, Mode FROM gamemode";
     return $pdo->query($query);
   }
   
+  //fetches array of user data based on username
   function getUserDataByUsername($username, $pdo) {
     $query = "SELECT * FROM `user` 
     WHERE username=?";
@@ -155,6 +143,7 @@
     return $result;
   }
 
+  //updates a specific user with provided parameters
   function updateUser($userID, $username, $email, $verified, $adminStatus, $pdo) {
     if ($adminStatus == 1) {
       $adminStatus = 1;
@@ -200,6 +189,7 @@
     }
   }
 
+  //adds a mode to the database
   function createMode($modeName, $pdo) {
     $query = "INSERT INTO gamemode (Mode) 
     VALUES (?);";
