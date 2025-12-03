@@ -115,14 +115,14 @@ button:hover {
     display: none;
 }
 
-#leaderboard table {
+.leaderboard table {
     width: 120%;
     border-style: ridge;
     border-width: 4px;
     margin: auto;
 }
 
-#leaderboard td {
+.leaderboard td {
     padding: 4px;
     vertical-align: top;
 }
@@ -131,21 +131,17 @@ button:hover {
     font-size: x-large;
 }
 
-.scoreLabel {
-    text-align: right;
-}
-
 .username {
     text-align: left;
     font-size: large;
 }
 
-.score {
+.score, .level {
     text-align: right;
     font-size: large;
 }
 
-#leaderboard ul {
+.leaderboard ul {
     list-style-type: none;
 }
 
@@ -155,4 +151,13 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
     background-color: rgb(90, 196, 231);
+}
+
+.sortBtn {
+    position: relative;
+    top: 10px;
+    width: 120%;
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
