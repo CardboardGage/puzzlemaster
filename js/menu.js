@@ -1,4 +1,4 @@
-$mainMenu = $(".mainMenuBtn");
+$mainMenu = $(".mainMenu");
 $backBtn = $("#backBtn");
 $leaderboard = $("#leaderboard");
 

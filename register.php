@@ -48,6 +48,9 @@
           <br><br>
           <input type="submit" value="Register">
         </form>
+        <form action="index.php">
+          <button id="backBtn">Cancel</button>
+        </form>
         <?php } else if ($method == 'POST') { 
           $username = trim(sanitizeString(INPUT_POST, 'username'));
           $email = trim(sanitizeString(INPUT_POST,'email'));

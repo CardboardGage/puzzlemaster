@@ -70,6 +70,9 @@
       <label for="submit">Don't have an account?</label>
       <input type="submit" value="Register" name="submit">
     </form>
+    <form action="index.php">
+      <button id="backBtn">Cancel</button>
+    </form>
   </div>
 </body>
 <?php 
