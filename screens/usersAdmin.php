@@ -17,10 +17,6 @@
     require "../dbConnect.php";
     if (isset($pdo)) {
     ?> 
-  <form action="maintenanceMenu.php" method="get">
-    <input type="hidden" name="fromList">
-    <input type="submit" name="createUser" value="New Entry">
-  </form>
   <br><?php
     }
   ?>

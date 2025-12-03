@@ -36,7 +36,7 @@ if (!isset($userData) || isset($cancel)) {
   ?>
   <form action="" method="post">
     <label>Are you sure?</label><br>
-    <label>WARNING: This will also delete all runHistory of this user.</label><br>
+    <label>WARNING: Deleting a logged in User WILL cause errors.</label><br>
     <label>Delete User <?= $userData['Username'] ?>?</label><br>
     <input type="submit" value="Yes" name="confirm">
     <input type="submit" value="No" name="cancel">

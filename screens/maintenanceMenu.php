@@ -35,6 +35,7 @@
   <script>
   $(document).ready(() => {
   $("#modeSelect").prop("selectedIndex", 0); 
+  $("#runIDText").prop("value", <?= getNextRunID($pdo); ?> )
   });
 </script>
 
@@ -72,6 +73,7 @@
         <input type="text" name="username">
         <input type="submit" class="dataBtn" value="Submit" name="userSubmit">
       </form>
+      <button id="backBtn">Cancel</button>
     <?php } ?> 
 
     <!-- editing user data -->
@@ -123,10 +125,10 @@
       <div id="runDataGenerator">
       <form action="" method="post">
         <label for="runID">RunID number</label>
-        <input type="text" name="runID" id="" value="123" disabled>
+        <input type="text" name="runID" id="runIDText" value="" disabled>
         <br>
         <label for="userID">UserID number</label>
-        <input type="text" name="userID" id="" value="004">
+        <input type="text" name="userID" id="" value="0">
         <br>
         <label for="score">Score</label>
         <input type="text" name="score" id="scoreTxt" value="0">

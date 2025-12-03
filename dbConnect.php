@@ -113,8 +113,9 @@
       LIMIT 1";
 
       $result = $pdo->query($query)->fetch();
-      if ($result >= 0) {
-        return $result;
+
+      if ($result[0] >= 0) {
+        return $result[0] + 1;
       } else {
         return 0;
       }

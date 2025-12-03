@@ -49,7 +49,12 @@
           <a href="admin/deleteEntry.php?runID=<?=$entry['RunID']?>">Delete</a><br>
         </td>
         <td class="runID"><?= $entry['RunID'] ?></td>
-        <td class="userID"><?= ($entry['Username']=="")? "Deleted User": $entry['Username'];?> (UID: <?= $entry['UserID'] ?>)</td>
+        <td class="userID"><?php
+        if ($entry['UserID']==0) {
+          echo("Guest");
+        } else {
+          echo(($entry['Username']=="")? "Deleted User": $entry['Username']); }
+          ?> (UID: <?= $entry['UserID'] ?>)</td>
         <td class="score"><?= $entry['Score'] ?></td>
         <td class="levelReached"><?= $entry['LevelReached'] ?></td>
         <td class="timeOf"><?= $entry['TimeOf'] ?></td>

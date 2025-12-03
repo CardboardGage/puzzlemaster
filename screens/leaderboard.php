@@ -18,7 +18,12 @@
       while ($entry = $runHistoryResult->fetch()) {
     ?>  
     <tr>
-      <td class="username"><?= ($entry['Username']=="")? "Deleted User": $entry['Username'];?></td>
+      <td class="username"><?php
+        if ($entry['UserID']==0) {
+          echo("Guest");
+        } else {
+          echo(($entry['Username']=="")? "Deleted User": $entry['Username']); }
+          ?></td>
       <td class="score"><?= $entry['Score'] ?></td>
     </tr><?php
     }
