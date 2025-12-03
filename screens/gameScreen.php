@@ -20,7 +20,7 @@ if (!isset($_SESSION["seed"])) {
         <header>
             <!-- menu button to pull up options/settings
             menu -->
-            <input type="button" value="menu">
+            <input type="button" value="menu" id="menuButton">
             <!-- just using placeholders right now 
             for whatever we hook these outputs up to -->
             <div class="level">

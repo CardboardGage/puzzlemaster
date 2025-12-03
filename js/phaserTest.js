@@ -6,4 +6,9 @@ var config = {
   scene: { preload, create, update },
 };
 
+let menuButton = document.querySelector("#menuButton");
+menuButton.addEventListener("click", () => {
+  window.location.href = "../index.php";
+});
+
 var game = new Phaser.Game(config);
