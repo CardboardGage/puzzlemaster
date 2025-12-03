@@ -7,6 +7,9 @@
   require "sanitize.php";
 
   $method = $_SERVER['REQUEST_METHOD'];
+  if (!isset($_SESSION["userID"])) {
+    $_SESSION["userID"] = "";
+  }
   if (!isset($_SESSION["username"]) || !isset($_SESSION["password"])) {
     $_SESSION["username"] = "";
     $_SESSION["password"] = "";
@@ -80,17 +83,40 @@
     }
 
     $result = checkUser($username, $password, $pdo);
+    //loops back if the username is incorrect
     if ($result == 'username') {
       $_SESSION['username'] = true;
       header('Location: login.php');
       exit;
+
+      //loops back if the password is incorrect
     } else if ($result == 'password') {
       $_SESSION['password'] = true;
       header('Location: login.php');
       exit;
+
+      //proceed if login is correct
     } else if ($result == 'accepted') {
       $_SESSION["loggedIn"] = true;
+
+      //update last logged in
       updateLogin($username, $pdo);
+
+      //set userID
+      $userID = getUserId($username, $pdo);
+      $_SESSION["userID"] = $userID["userID"];
+
+      //test if the user is an admin, and store
+      try {
+        $adminStatus = checkAdmin($username, $pdo);
+      } catch (Exception $e) {
+        echo $e->getMessage();
+      }
+
+      if ($adminStatus) {
+        $_SESSION["admin"] = true;
+      }
+      
       //redirect to destination page here
       header("Location: index.php");
       exit;

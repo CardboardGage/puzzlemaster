@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Run</title>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <?php 
 ini_set('display_errors', '1');
 error_reporting(-1);
@@ -23,7 +24,7 @@ if (!isset($runData) || isset($cancel)) {
 ?>
 <script>
   $(document).ready(() => {
-  $("#modeSelect").prop("selectedIndex", <?= $runData['ModeID'] ?>); 
+    $("#modeSelect").prop("selectedIndex", <?= $runData['ModeID']-1 ?>); 
   });
 </script>
 

@@ -5,8 +5,9 @@
   }
 
   $_SESSION["loggedIn"] = false;
+  $_SESSION["admin"] = false;
+  $_SESSION["userID"] = "";
 
 
   header("Location: index.php");
   exit;
-?> 

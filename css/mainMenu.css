@@ -1,21 +1,64 @@
+html {
+    background: #de7171;
+    background: linear-gradient(90deg,rgba(222, 113, 113, 1) 0%, rgba(83, 106, 237, 1) 100%);
+}
+
 h1 {
     color: red;
     text-align: center;
 }
 
-.buttons {
+.columns {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     margin: 0 auto;
-    width: 20%;
+    width: 500px;
     margin-top: 15%;
+}
+
+#startBtn, #loginBtn, #logoutBtn, #configBtn, #maintBtn {
+    clip-path: polygon(0 0, 92.66% 0, 100% 22%, 100% 100%, 7.33% 100%, 0 78%); 
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#startBtn {
+    background-color: rgba(0, 186, 19, .7);
+}
+
+#loginBtn {
+    background-color: rgba(44, 137, 230, .7);
+}
+
+#logoutBtn {
+    background-color: rgba(235, 52, 52, .7);
+} 
+
+#configBtn {
+    background-color: rgba(115, 113, 112, .7);
+}
+
+#startBtn:hover, .seedSave:hover {
+    background-color: rgba(0, 186, 19, 1);
+}
+
+#loginBtn:hover {
+    background-color: rgba(44, 137, 230, 1);
+}
+
+#logoutBtn:hover, #backBtn:hover {
+    background-color: rgba(235, 52, 52, 1);
+}
+
+#configBtn:hover {
+    background-color: rgba(115, 113, 112, 1);
 }
 
 button, .formBtn {
     text-align: center;
-    height: 110%;
-    width: 40%;
+    height: 50px;
+    width: 200px;
     margin: auto;
-    font-size: medium;
+    font-size: large;
 }
 
 h3 {
@@ -27,7 +70,6 @@ form {
     display: grid;
     margin: auto;
     width: 15%;
-    margin-top: 15%; 
 }   
 
 label {
@@ -39,46 +81,42 @@ label {
 .option {
     display: flex; 
     justify-content: center; 
-    align-items: center;  
-    gap: 3px;
+    align-items: center;
+}
+
+.seedSave:hover {
+    cursor: pointer;
 }
 
 .option label {
-    margin: 0;
-}
-
-.configMenu input {
-    margin: 0;
+    margin: 20px;
+    font-size: x-large;
 }
 
 input {
-    margin: auto;
+    position: relative;
+    font-size: large;
+    margin: 5px;
 }
 
-#logIn {
-    margin-top: 5%;
-    width: 60%;
-    height: 110%;
-    font-size: 110%;
+#backBtn {
+    position: relative;
+    top: 10px;
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
 }
 
-#logIn:hover {
+button:hover {
     cursor: pointer;
-    background-color: green;
-    border-radius: 6%;
 }
 
 .startMenu, .loginMenu, .configMenu, .devMenu {
-  display: none;
-}
-
-#leaderboard {
-    display: grid;
-    text-align: center;
+    display: none;
 }
 
 #leaderboard table {
-    width: 10%;
+    width: 120%;
     border-style: ridge;
     border-width: 4px;
     margin: auto;
@@ -86,11 +124,40 @@ input {
 
 #leaderboard td {
     padding: 4px;
-    text-align: left;
-    background-color: lightblue;
     vertical-align: top;
+}
+
+.userID, .scoreLabel {
+    font-size: x-large;
+}
+
+.username {
+    text-align: left;
+    font-size: large;
+}
+
+.score, .level {
+    text-align: right;
+    font-size: large;
 }
 
 #leaderboard ul {
     list-style-type: none;
+}
+
+tr:nth-child(even) {
+    background-color: lightblue;
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(90, 196, 231);
+}
+
+.sortBtn {
+    position: relative;
+    top: 10px;
+    width: 120%;
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }

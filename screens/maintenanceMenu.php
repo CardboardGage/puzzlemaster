@@ -8,10 +8,17 @@
 
   $method = $_SERVER['REQUEST_METHOD'];
 
-  $_SESSION["loggedIn"] = true;
+  if (!isset($_SESSION["loggedIn"])) {
+    $_SESSION["loggedIn"] = "";
+  }
 
   if (!isset($_SESSION["target"])) {
     $_SESSION["target"] = "";
+  }
+
+  if ($_SESSION['admin'] == false) {
+    header('Location: ../index.php');
+    exit();
   }
 ?>
 
@@ -28,6 +35,7 @@
   <script>
   $(document).ready(() => {
   $("#modeSelect").prop("selectedIndex", 0); 
+  $("#runIDText").prop("value", <?= getNextRunID($pdo); ?> )
   });
 </script>
 
@@ -40,6 +48,9 @@
       <?php if (!isset($_GET["editUser"]) && !isset($_GET["createRun"]) && !isset($_GET["createMode"]) && !isset($_GET["userSubmit"])) { ?> 
         <form action="" method="get">
           <input type="submit" id="editUserBtn" class="databBtn" value="Edit User Data" name="editUser">
+        </form>
+        <form action="usersAdmin.php" method="post">
+          <input type="submit" id="userListBtn" class="dataBtn" value="View Users" name="userList">
         </form>
         <form action="" method="get">
           <input type="submit" id="createRunBtn" class="dataBtn" value="Create Run Data" name="createRun">
@@ -62,6 +73,7 @@
         <input type="text" name="username">
         <input type="submit" class="dataBtn" value="Submit" name="userSubmit">
       </form>
+      <button id="backBtn">Cancel</button>
     <?php } ?> 
 
     <!-- editing user data -->
@@ -113,10 +125,10 @@
       <div id="runDataGenerator">
       <form action="" method="post">
         <label for="runID">RunID number</label>
-        <input type="text" name="runID" id="" value="123" disabled>
+        <input type="text" name="runID" id="runIDText" value="" disabled>
         <br>
         <label for="userID">UserID number</label>
-        <input type="text" name="userID" id="" value="004">
+        <input type="text" name="userID" id="" value="0">
         <br>
         <label for="score">Score</label>
         <input type="text" name="score" id="scoreTxt" value="0">
