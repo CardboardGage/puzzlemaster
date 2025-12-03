@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `puzzlemaster`;
 CREATE DATABASE `puzzlemaster`;
 USE puzzlemaster;
 
-CREATE TABLE `User` (
+CREATE TABLE `user` (
 	UserID int PRIMARY KEY AUTO_INCREMENT,
     Username varChar(24) NOT NULL,
     Email varChar(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `User` (
     AdminStatus bool
 );
 
-CREATE TABLE `RunHistory` (
+CREATE TABLE `runhistory` (
 	RunID int PRIMARY KEY AUTO_INCREMENT,
     UserID int NOT NULL,
     Score int,
@@ -23,7 +23,7 @@ CREATE TABLE `RunHistory` (
     ModeID int
 );
 
-CREATE TABLE `GameMode` (
+CREATE TABLE `gamemode` (
 	ModeID int PRIMARY KEY AUTO_INCREMENT,
     `Mode` varChar(24)
 );
