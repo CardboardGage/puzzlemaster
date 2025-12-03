@@ -16,10 +16,7 @@
     $_SESSION["target"] = "";
   }
 
-  if ($_SESSION['admin'] == false) {
-    header('Location: ../index.php');
-    exit();
-  }
+  require '../authenticate.php';
 ?>
 
 <!DOCTYPE html>

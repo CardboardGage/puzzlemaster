@@ -15,6 +15,8 @@
     error_reporting(-1);
 
     require "../dbConnect.php";
+    require '../authenticate.php';
+
     if (isset($pdo)) {
     ?> 
   <br><?php

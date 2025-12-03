@@ -13,6 +13,7 @@ error_reporting(-1);
 
 require '../../sanitize.php';
 require '../../dbConnect.php';
+require '../../authenticate.php';
 
 $userData = getUserByID(sanitizeInt(INPUT_GET, 'userID'), $pdo);
 $saveChanges = sanitizeString(INPUT_POST, 'saveChanges');

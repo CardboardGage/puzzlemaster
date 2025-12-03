@@ -12,6 +12,7 @@ error_reporting(-1);
 
 require '../../sanitize.php';
 require '../../dbConnect.php';
+require '../../authenticate.php';
 
 $runData = getRunByID(sanitizeInt(INPUT_GET, 'runID'), $pdo);
 $saveChanges = sanitizeString(INPUT_POST, 'saveChanges');

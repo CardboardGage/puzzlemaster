@@ -15,15 +15,14 @@
     error_reporting(-1);
 
     require "../dbConnect.php";
+    require '../authenticate.php';
     if (isset($pdo)) {
     ?> 
   <form action="maintenanceMenu.php" method="get">
     <input type="hidden" name="fromLeaderboard">
     <input type="submit" name="createRun" value="New Entry">
   </form>
-  <br><?php
-    }
-  ?>
+  <br>
   <form action="maintenanceMenu.php">
     <input type="submit" value="Return">
   </form>
@@ -65,7 +64,9 @@
   }
   ?>
   </table>
-
+  <?php
+  }
+  ?>
   </div>
 
 </body>
