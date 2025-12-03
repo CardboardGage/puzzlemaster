@@ -355,7 +355,7 @@ function handleGemDown(pointer, gem) {
   const c2 = g2.getData("col");
 
   const isAdjacent =
-    (Math.abs(c1 - c2) === 1) ||
+    (Math.abs(c1 - c2) === 1) &&
     (Math.abs(r1 - r2) === 1);
 
   if (!isAdjacent) {
