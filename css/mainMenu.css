@@ -1,3 +1,8 @@
+html {
+    background: #de7171;
+    background: linear-gradient(90deg,rgba(222, 113, 113, 1) 0%, rgba(83, 106, 237, 1) 100%);
+}
+
 h1 {
     color: red;
     text-align: center;
@@ -110,13 +115,8 @@ button:hover {
     display: none;
 }
 
-#leaderboard {
-    display: grid;
-    text-align: center;
-}
-
 #leaderboard table {
-    width: 10%;
+    width: 120%;
     border-style: ridge;
     border-width: 4px;
     margin: auto;
@@ -124,11 +124,35 @@ button:hover {
 
 #leaderboard td {
     padding: 4px;
-    text-align: left;
-    background-color: lightblue;
     vertical-align: top;
+}
+
+.userID, .scoreLabel {
+    font-size: x-large;
+}
+
+.scoreLabel {
+    text-align: right;
+}
+
+.username {
+    text-align: left;
+    font-size: large;
+}
+
+.score {
+    text-align: right;
+    font-size: large;
 }
 
 #leaderboard ul {
     list-style-type: none;
+}
+
+tr:nth-child(even) {
+    background-color: lightblue;
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(90, 196, 231);
 }
