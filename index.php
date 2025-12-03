@@ -1,17 +1,58 @@
+<?php session_start(); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PuzzleMaster</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/mainMenu.css">
+  <?php 
+  $_SESSION["state"] = 0;
+  if (!isset($_SESSION["loggedIn"])) {
+    $_SESSION["loggedIn"] = false;
+  }
 
-    <link rel="stylesheet" href="css/index.css">
+  if (!isset($_SESSION["admin"])) {
+    $_SESSION["admin"] = false;
+  }
 
+  require "dbConnect.php";
+  if (isset($pdo)) {
+    noAdmin($pdo);
+  }
+?>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  
-
-  
+    
+  <div class="wrapper">
+    <div class="columns">
+    
+      <div class="buttons mainMenu">
+        <button id="startBtn" class="mainMenuBtn">Start Run</button> 
+        <?php 
+          if (!$_SESSION["loggedIn"] && isset($pdo)) {
+        ?> 
+        <button id="loginBtn" class="mainMenuBtn">Login</button>  
+        <?php } else {?>
+        <button id="logoutBtn" class="mainMenuBtn">Log Out</button>
+        <?php } ?> 
+        <button id="configBtn" class="mainMenuBtn">Config</button><?php
+          if ($_SESSION["loggedIn"] && isset($pdo) && $_SESSION["admin"]) {
+        ?>
+        <button id="maintBtn" class="mainMenuBtn">Maintenance</button>
+        <?php } ?>
+      </div>
+      <?php
+      include "screens/leaderboard.php";
+      include "screens/configMenu.php";
+      ?>
+    </div>
+  </div>
+  <script src="js/menu.js"></script>
 </body>
 </html>
