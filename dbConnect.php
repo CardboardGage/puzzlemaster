@@ -353,4 +353,37 @@
       throw $e;
     }
   }
+
+  // Returns the contents of the runHistory table but with different sorts and limits based on arguments
+  function getLimitedLeaderboard($set, $pdo) {
+    switch ($set) {
+      case "normal": 
+            $query = "SELECT RunID, UserID, Score, user.Username 
+              FROM puzzlemaster.runhistory
+              LEFT JOIN user USING (UserID)
+              WHERE ModeID = 1
+              ORDER BY Score DESC
+              LIMIT 10";
+      break;
+    case "seeded": 
+            $query = "SELECT RunID, UserID, Score, user.Username 
+              FROM puzzlemaster.runhistory
+              LEFT JOIN user USING (UserID)
+              WHERE ModeID = 2
+              ORDER BY Score DESC
+              LIMIT 10";
+      break;
+    case "highLevel": 
+            $query = "SELECT RunID, UserID, Score, LevelReached, user.Username 
+              FROM puzzlemaster.runhistory
+              LEFT JOIN user USING (UserID)
+              WHERE ModeID = 1
+              ORDER BY LevelReached DESC, Score DESC
+              LIMIT 10";
+      break;
+    }
+
+    return $pdo->query($query);
+  }
+
 ?> 

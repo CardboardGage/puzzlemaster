@@ -1,13 +1,12 @@
 canvas {
-    margin-top: 1rem;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
+    margin-top: 1rem;
 }
 
-header {
-  display: flex;
-  justify-content: center;
+header:not(input) {
+    display: flex;
+    justify-content: center;
 }
 
 aside {
@@ -33,8 +32,7 @@ aside ul li img {
     display: block;
 }
 
-
-.level, .moves, .score, .target {
+.level, .moves, .score, .target, .total {
   border: 1px solid black;
   position: relative;
   float: right;
@@ -44,15 +42,17 @@ aside ul li img {
   flex-direction: column;
   padding: 5px;
   align-items: center;
-}
-
-.level {
-  background-color: rgba(76, 36, 179);
   width: 10%;
   height: 11%;
 }
 
-.level p, .moves p, .score p, .target p {
+.level {
+  background-color: rgb(15, 112, 209);
+  width: 10%;
+  height: 11%;
+}
+
+.level p, .moves p, .score p, .target p, .total p {
   margin: 0;
   margin-left: 8px;
   font-size: 150%;
@@ -65,28 +65,42 @@ div output {
 }
 
 .moves {
-  background-color: rgba(44, 137, 230, 1);
+  background-color: rgb(155, 127, 219);
   width: 10%;
   height: 11%;
 }
 
 .score {
-  background-color: rgba(235, 52, 52, 1);
-  width: 10%;
-  height: 11%;
+  background-color: rgb(201, 7, 120);
   z-index: -1;
   border-top-left-radius: 0px;
   border-top-right-radius: 15px;
 }
 
+.total {
+  background-color: rgb(122, 36, 179);
+  width: 12%;
+  border-top-right-radius: 15px;
+}
+
 .target {
-  background-color: rgba(127, 173, 219, 1);
-  width: 10%;
-  height: 11%;
-  z-index: 0;
+  background-color: rgb(235, 15, 15);
+  z-index: -2;
   border-top-left-radius: 0px;
   border-top-right-radius: 15px;
 }
 
+input {
+  height: 40px;
+  clip-path: polygon(0 0, 92.66% 0, 100% 22%, 100% 100%, 7.33% 100%, 0 78%); 
+  background-color: rgba(235, 52, 52, .7);
+  position: absolute;
+  font-size: x-large;
+  right: 76%;
+  top: 5.5%;
+}
 
-
+input:hover {
+  cursor: pointer;
+  background-color: rgba(235, 52, 52, 1);
+}

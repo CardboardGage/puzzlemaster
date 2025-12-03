@@ -131,16 +131,12 @@ button:hover {
     font-size: x-large;
 }
 
-.scoreLabel {
-    text-align: right;
-}
-
 .username {
     text-align: left;
     font-size: large;
 }
 
-.score {
+.score, .level {
     text-align: right;
     font-size: large;
 }
@@ -155,4 +151,13 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
     background-color: rgb(90, 196, 231);
+}
+
+.sortBtn {
+    position: relative;
+    top: 10px;
+    width: 120%;
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
