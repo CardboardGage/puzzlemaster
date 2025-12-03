@@ -26,12 +26,15 @@ function preload() {
   // Background board image
   this.load.image("gamegrid", "../assets/gamepieces/gamegrid.jpg");
 
+  this.load.image("caveWall", "../assets/background/caveWall.jpg");
+
   // Gem images
-  this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.jpg");
-  this.load.image("squareGem", "../assets/gamepieces/gamepiece02.jpg");
-  this.load.image("diamondGem", "../assets/gamepieces/gamepiece03.jpg");
-  this.load.image("hexagonGem", "../assets/gamepieces/gamepiece04.jpg");
-  this.load.image("octogonGem", "../assets/gamepieces/gamepiece05.jpg");
+  // Gem images (corrected to .png)
+  this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.png");
+  this.load.image("squareGem", "../assets/gamepieces/gamepiece02.png");
+  this.load.image("diamondGem", "../assets/gamepieces/gamepiece03.png");
+  this.load.image("hexagonGem", "../assets/gamepieces/gamepiece04.png");
+  this.load.image("octogonGem", "../assets/gamepieces/gamepiece05.png");
 
   this.load.image("goldPowerup", "../assets/gamepieces/goldPowerup.png");
   this.load.image("pickaxePowerup", "../assets/gamepieces/pickaxePowerup.png");
@@ -39,11 +42,26 @@ function preload() {
 }
 
 function create() {
+  let seedTag = document.querySelector("#seed");
+  let seed = seedTag.innerHTML;
   // Draw background and size it to match the grid area
+  // Full-screen cave wall background
   this.add
-    .image(0, 0, "gamegrid")
+    .image(0, 0, "caveWall")
     .setOrigin(0, 0)
-    .setDisplaySize(COLS * TILE_SIZE, ROWS * TILE_SIZE);
+    .setDisplaySize(this.scale.width, this.scale.height);
+
+  if (seed) {
+    this.rng = new Phaser.Math.RandomDataGenerator([seed]);
+  } else {
+    this.rng = new Phaser.Math.RandomDataGenerator();
+  }
+
+  this.domLevelOutput = document.querySelector(".level output");
+  this.domMovesOutput = document.querySelector(".moves output");
+  this.domTotalOutput = document.querySelector(".total output");
+  this.domTargetOutput = document.querySelector(".target output");
+  this.domScoreOutput = document.querySelector(".score output");
 
   // Game state
   this.round = 1;
@@ -109,6 +127,24 @@ function create() {
 
 function update() {
   // Nothing needed per frame right now
+}
+
+function updateDomHeader(scene) {
+  if (scene.domLevelOutput) {
+    scene.domLevelOutput.value = scene.round.toString().padStart(2, "0");
+  }
+  if (scene.domMovesOutput) {
+    scene.domMovesOutput.value = scene.movesLeft.toString().padStart(2, "0");
+  }
+  if (scene.domTargetOutput) {
+    scene.domTargetOutput.value = scene.targetScore.toString();
+  }
+  if (scene.domScoreOutput) {
+    scene.domScoreOutput.value = scene.score.toString().padStart(4, "0");
+  }
+  if (scene.domTotalOutput) {
+    scene.domTotalOutput.value = scene.totalScore.toString().padStart(4, "0");
+  }
 }
 
 // Create a gem at [row,col] that does NOT immediately make a 3-in-a-row
@@ -193,6 +229,10 @@ function startNewRound(scene) {
   scene.roundText.setText("Round: " + scene.round);
   scene.targetText.setText("Target: " + scene.targetScore);
   scene.movesText.setText("Moves: " + scene.movesLeft);
+
+  // 🔹 Sync DOM header with current values
+  updateDomHeader(scene);
+
   // 🔹 handle double-score buff duration
   if (scene.doubleScoreActive) {
     scene.doubleScoreRoundsLeft--;
@@ -216,10 +256,10 @@ function createRandomGem(scene, row, col) {
   let powerupType = null;
 
   // 🔹 Decide if this spawn is a power-up
-  const roll = Phaser.Math.Between(1, 100);
+  const roll = scene.rng.between(1, 100);
   if (roll <= POWERUP_CHANCE_PERCENT) {
     // choose one of the 3 power-up types
-    const choice = Phaser.Utils.Array.GetRandom(POWERUP_TYPES);
+    const choice = scene.rng.pick(POWERUP_TYPES);
     if (choice === "gold") {
       key = "goldPowerup";
       type = "powerup";
@@ -237,7 +277,7 @@ function createRandomGem(scene, row, col) {
 
   // If not chosen as power-up, or something went wrong, use a normal gem
   if (!key) {
-    key = Phaser.Utils.Array.GetRandom(GEM_KEYS);
+    key = scene.rng.pick(GEM_KEYS);
     type = "gem";
     powerupType = null;
   }
@@ -269,10 +309,10 @@ function handleGemDown(pointer, gem) {
   if (scene.movesLeft <= 0) return;
 
   // 🔹 If this is a power-up, use it instead of selecting/swapping
-    if (gem.getData('type') === 'powerup') {
-        usePowerup(scene, gem);
-        return;
-    }
+  if (gem.getData("type") === "powerup") {
+    usePowerup(scene, gem);
+    return;
+  }
 
   // No gem selected yet: select this one
   if (!scene.selectedGem) {
@@ -315,8 +355,9 @@ function handleGemDown(pointer, gem) {
   const c2 = g2.getData("col");
 
   const isAdjacent =
-    (r1 === r2 && Math.abs(c1 - c2) === 1) ||
-    (c1 === c2 && Math.abs(r1 - r2) === 1);
+    ((Math.abs(c1 - c2) === 1) && (Math.abs(r1 - r2) === 1)) || 
+    ((Math.abs(c1 - c2) === 1) && (Math.abs(r1 - r2) === 0)) || 
+    ((Math.abs(c1 - c2) === 0) && (Math.abs(r1 - r2) === 1));
 
   if (!isAdjacent) {
     shakeGem(scene, gem);
@@ -326,6 +367,7 @@ function handleGemDown(pointer, gem) {
   // Use up one move
   scene.movesLeft--;
   scene.movesText.setText("Moves: " + scene.movesLeft);
+  updateDomHeader(scene);
 
   // Lock input during swap + resolution
   scene.isProcessingMove = true;
@@ -334,84 +376,136 @@ function handleGemDown(pointer, gem) {
 }
 
 function usePowerup(scene, gem) {
-    if (scene.isProcessingMove || scene.isGameOver) return;
+  if (scene.isProcessingMove || scene.isGameOver) return;
 
-    // Spend a move when using a power-up
-    scene.movesLeft--;
-    scene.movesText.setText('Moves: ' + scene.movesLeft);
-    scene.isProcessingMove = true;
+  // Spend a move when using a power-up
+  scene.movesLeft--;
+  scene.movesText.setText("Moves: " + scene.movesLeft);
+  scene.isProcessingMove = true;
+  updateDomHeader(scene);
 
-    const pType = gem.getData('powerupType');
+  const pType = gem.getData("powerupType");
 
-    if (pType === 'gold') {
-        // 🔹 activate double-score for this + next round
-        scene.doubleScoreActive = true;
-        scene.doubleScoreRoundsLeft = 2;
+  if (pType === "gold") {
+    // 🔹 activate double-score for this + next round
+    scene.doubleScoreActive = true;
+    scene.doubleScoreRoundsLeft = 2;
 
-        // Remove just this gem and let board drop
-        destroyGemsAndDrop(scene, [gem]);
-    } else if (pType === 'pickaxe') {
-        // 🔹 break entire row
-        const row = gem.getData('row');
-        const gemsToDestroy = [];
-        for (let c = 0; c < COLS; c++) {
-            const g = scene.board[row][c];
-            if (g) gemsToDestroy.push(g);
-        }
-        destroyGemsAndDrop(scene, gemsToDestroy);
-    } else if (pType === 'tnt') {
-        // 🔹 destroy 4x4 area centered on this gem
-        const centerRow = gem.getData('row');
-        const centerCol = gem.getData('col');
-        const gemsToDestroy = [];
-
-        for (let r = centerRow - 1; r <= centerRow + 2; r++) {
-            for (let c = centerCol - 1; c <= centerCol + 2; c++) {
-                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
-                    const g = scene.board[r][c];
-                    if (g) gemsToDestroy.push(g);
-                }
-            }
-        }
-
-        destroyGemsAndDrop(scene, gemsToDestroy);
-    } else {
-        // unknown power-up type: just clear it
-        destroyGemsAndDrop(scene, [gem]);
+    // Remove just this gem and let board drop
+    destroyGemsAndDrop(scene, [gem]);
+  } else if (pType === "pickaxe") {
+    // 🔹 break entire row
+    const row = gem.getData("row");
+    const gemsToDestroy = [];
+    for (let c = 0; c < COLS; c++) {
+      const g = scene.board[row][c];
+      if (g) gemsToDestroy.push(g);
     }
+    destroyGemsAndDrop(scene, gemsToDestroy);
+  } else if (pType === "tnt") {
+    // 🔹 destroy 4x4 area centered on this gem
+    const centerRow = gem.getData("row");
+    const centerCol = gem.getData("col");
+    const gemsToDestroy = [];
+
+    for (let r = centerRow - 1; r <= centerRow + 2; r++) {
+      for (let c = centerCol - 1; c <= centerCol + 2; c++) {
+        if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+          const g = scene.board[r][c];
+          if (g) gemsToDestroy.push(g);
+        }
+      }
+    }
+
+    destroyGemsAndDrop(scene, gemsToDestroy);
+  } else {
+    // unknown power-up type: just clear it
+    destroyGemsAndDrop(scene, [gem]);
+  }
 }
 
 function destroyGemsAndDrop(scene, gemList) {
-    const board = scene.board;
-    const unique = Array.from(new Set(gemList));
-    let destroyCount = 0;
-    const total = unique.length;
+  const board = scene.board;
+  const unique = Array.from(new Set(gemList));
+  let destroyCount = 0;
+  const total = unique.length;
 
-    if (total === 0) {
-        scene.isProcessingMove = false;
-        checkRoundEnd(scene);
-        return;
+  if (total === 0) {
+    scene.isProcessingMove = false;
+    checkRoundEnd(scene);
+    return;
+  }
+
+  // 🔹 50 points per gem destroyed by powerups
+  let scoreGained = total * 50;
+
+  // apply double-score buff from gold bar if active
+  if (scene.doubleScoreActive) {
+    scoreGained *= 2;
+  }
+
+  // update round score
+  scene.score += scoreGained;
+  scene.scoreText.setText("Score: " + scene.score);
+
+  // update cumulative total score
+  scene.totalScore += scoreGained;
+  scene.totalScoreText.setText("Total: " + scene.totalScore);
+
+  // update high score if needed
+  if (scene.totalScore > scene.highScore) {
+    scene.highScore = scene.totalScore;
+    scene.highScoreText.setText("High: " + scene.highScore);
+  }
+  updateDomHeader(scene);
+
+  // optional: floating score text at average position of destroyed gems
+  let sumX = 0;
+  let sumY = 0;
+  unique.forEach((gem) => {
+    sumX += gem.x;
+    sumY += gem.y;
+  });
+  const cx = sumX / total;
+  const cy = sumY / total;
+
+  const floatText = scene.add
+    .text(cx, cy, "+" + scoreGained, {
+      fontSize: "32px",
+      fill: "#ffcc00",
+      stroke: "#000000",
+      strokeThickness: 4,
+    })
+    .setOrigin(0.5);
+
+  scene.tweens.add({
+    targets: floatText,
+    y: cy - 50,
+    alpha: 0,
+    duration: 700,
+    ease: "Cubic.easeOut",
+    onComplete: () => floatText.destroy(),
+  });
+
+  // now actually destroy the gems and drop the board
+  unique.forEach((gem) => {
+    const row = gem.getData("row");
+    const col = gem.getData("col");
+
+    if (row != null && col != null && board[row][col] === gem) {
+      board[row][col] = null;
     }
 
-    unique.forEach(gem => {
-        const row = gem.getData('row');
-        const col = gem.getData('col');
-
-        if (row != null && col != null && board[row][col] === gem) {
-            board[row][col] = null;
-        }
-
-        // reuse your pop animation
-        playPopAnimation(scene, gem, () => {
-            destroyCount++;
-            if (destroyCount === total) {
-                // after all popped, let everything fall and handle cascades
-                dropGems(scene);
-            }
-        });
+    // reuse your pop animation
+    playPopAnimation(scene, gem, () => {
+      destroyCount++;
+      if (destroyCount === total) {
+        // after all popped, let everything fall and handle cascades
+        dropGems(scene);
+      }
     });
+  });
 }
-
 
 // shake animation for invalid/bad interactions
 function shakeGem(scene, gem) {
@@ -425,10 +519,10 @@ function shakeGem(scene, gem) {
 }
 
 function swapGems(scene, g1, g2, isReversing) {
-  const r1 = g1.getData("row");
-  const c1 = g1.getData("col");
-  const r2 = g2.getData("row");
-  const c2 = g2.getData("col");
+  let r1 = g1.getData("row");
+  let c1 = g1.getData("col");
+  let r2 = g2.getData("row");
+  let c2 = g2.getData("col");
 
   // Swap in the logical board array
   scene.board[r1][c1] = g2;
@@ -534,7 +628,45 @@ function findMatches(scene) {
     }
   }
 
-  return matches;
+// Diagonal Matches 
+    for(let col = 0, row = 0; col < COLS & row < ROWS; col++, row++){
+        let run = [board[1][1]];
+        console.log(run);
+        // for(let row = 1; row < ROWS; row++){
+        //     let current = board[row][col];
+        //     let next = board[row + 1][col + 1];
+        //     let currentGem = current.getData('key');
+        //     let diagonals = findAntiDiagonals(scene,row);
+        //     let antiDiagonals = findAntiDiagonals(scene,row);
+
+        //     while (!isOutOfBounds(row,col,run)){
+        //         diagonals.forEach((gem) => {
+        //             if(gem.getData('key') == currentGem){
+        //                 run.push(gem);
+        //             } else {
+        //                 if(run.length >= 3){
+        //                     matches.push(run.slice());
+        //                 }
+        //             }
+        //         })
+        //         antiDiagonals.forEach((gem) => {
+        //             if(gem.getData('key') == currentGem){
+        //                 run.push(gem);
+        //             } else {
+        //                 if (run.length >= 3) {
+        //                     matches.push(run.slice());
+        //                 }
+        //             }
+        //         })
+        //     } 
+        //     if(run.length >= 3) {
+        //         matches.push(run.slice());
+        //     }
+        //     run = [next];            
+        // }
+    }
+
+    return matches;
 }
 
 function handleMatches(scene, matches) {
@@ -577,6 +709,7 @@ function handleMatches(scene, matches) {
     scene.highScore = scene.totalScore;
     scene.highScoreText.setText("High: " + scene.highScore);
   }
+  updateDomHeader(scene);
 
   // Floating score text at the average position of all matched gems
   if (matchedCount > 0 && scoreGained > 0) {
@@ -770,6 +903,16 @@ function endGame(scene) {
   scene.isGameOver = true;
   scene.isProcessingMove = false;
 
+  let sentData = "score=" + scene.totalScore + "&round=" + scene.round;
+  let request = new XMLHttpRequest();
+  request.open("POST", "../scoreReport.php");
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  request.onreadystatechange = function () {
+    if (request.readyState == 4 && request.status == 200) {
+    }
+  };
+  request.send(sentData);
+
   const w = scene.scale.width;
   const h = scene.scale.height;
 
@@ -804,18 +947,6 @@ function endGame(scene) {
       fill: "#ffffff",
     })
     .setOrigin(0.5);
-
-  //reporting score to the database
-  var sentData = "score=" + scene.totalScore + "&round=" + scene.round;
-  var request = new XMLHttpRequest();
-  request.open("POST", "../scoreReport.php");
-  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  request.onreadystatechange = function() {
-    if(request.readyState == 4 && request.status == 200) {
-        alert(request.responseText + " score: " + sentData);
-    }
-  }
-  request.send(sentData);
 
   // One-time click to restart
   overlay.setInteractive();

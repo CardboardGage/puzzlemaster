@@ -19,7 +19,7 @@ CREATE TABLE `RunHistory` (
     Score int,
     LevelReached int,
     TimeOf dateTime,
-    Seed int,
+    Seed varchar(16),
     ModeID int
 );
 
@@ -27,4 +27,7 @@ CREATE TABLE `GameMode` (
 	ModeID int PRIMARY KEY AUTO_INCREMENT,
     `Mode` varChar(24)
 );
+
+INSERT INTO `GameMode` (`Mode`) VALUES ('Unseeded');
+INSERT INTO `GameMode` (`Mode`) VALUES ('Seeded');
 

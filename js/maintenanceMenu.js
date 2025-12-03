@@ -8,21 +8,18 @@ $dataBtn = $(".dataBtn");
 $editUser.on("click", ()=>{
   $dataBtn.hide();
   $("#userDataEditor").show();
-  $return.hide();
   $backBtn.show();
 });
 
 $createRun.on("click", ()=>{
   $dataBtn.hide();
   $("#runDataGenerator").show();
-  $return.hide();
   $backBtn.show();
 });
 
 $createMode.on("click", ()=>{
   $dataBtn.hide();
   $("#modeEditor").show();
-  $return.hide();
   $backBtn.show();
 });
 
@@ -32,7 +29,7 @@ $backBtn.on("click", ()=>{
   $("#modeEditor").hide();
   $dataBtn.show();
   $backBtn.hide();
-  $return.show();
+  window.location.href = "maintenanceMenu.php";
 });
 
 $return.on("click", ()=>{

@@ -1,11 +1,38 @@
 canvas {
-  position: relative;
-  display: block; 
-  margin: auto;
-  bottom: 62.5rem;
+    display: block;
+    margin: auto;
+    margin-top: 1rem;
 }
 
-.time, .moves, .score, .level {
+header:not(input) {
+    display: flex;
+    justify-content: center;
+}
+
+aside {
+    position: absolute;     /* sticks to the left */
+    left: 1rem;             /* a little spacing from the browser edge */
+    top: 10rem;             /* adjust to your layout */
+    display: flex;
+    flex-direction: column; /* vertical layout */
+    gap: 1rem;              /* spacing between gem icons */
+    align-items: center;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside ul li img {
+    width: 48px;          /* adjust size */
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
+.level, .moves, .score, .target, .total {
   border: 1px solid black;
   position: relative;
   float: right;
@@ -14,16 +41,18 @@ canvas {
   display: flex;
   flex-direction: column;
   padding: 5px;
-}
-
-.time {
-  background-color: rgba(44, 137, 230, 1);
+  align-items: center;
   width: 10%;
   height: 11%;
-  z-index: 2;
 }
 
-.time p, .moves p, .score p, .level p {
+.level {
+  background-color: rgb(15, 112, 209);
+  width: 10%;
+  height: 11%;
+}
+
+.level p, .moves p, .score p, .target p, .total p {
   margin: 0;
   margin-left: 8px;
   font-size: 150%;
@@ -36,27 +65,42 @@ div output {
 }
 
 .moves {
-  background-color: rgba(127, 173, 219, 1);
+  background-color: rgb(155, 127, 219);
   width: 10%;
   height: 11%;
-  z-index: 1;
 }
 
 .score {
-  background-color: rgba(235, 52, 52, 1);
-  width: 10%;
-  height: 11%;
-  z-index: 0;
+  background-color: rgb(201, 7, 120);
+  z-index: -1;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
 }
 
-.level {
-  background-color: black;
-  color: white;
+.total {
+  background-color: rgb(122, 36, 179);
+  width: 12%;
+  border-top-right-radius: 15px;
+}
+
+.target {
+  background-color: rgb(235, 15, 15);
+  z-index: -2;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 15px;
+}
+
+input {
+  height: 40px;
+  clip-path: polygon(0 0, 92.66% 0, 100% 22%, 100% 100%, 7.33% 100%, 0 78%); 
+  background-color: rgba(235, 52, 52, .7);
   position: absolute;
-  right: 0;
-  top: 12%;
-  width: 7%;
-  height: 11%;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 0;
+  font-size: x-large;
+  right: 76%;
+  top: 5.5%;
+}
+
+input:hover {
+  cursor: pointer;
+  background-color: rgba(235, 52, 52, 1);
 }
