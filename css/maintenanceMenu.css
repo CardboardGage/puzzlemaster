@@ -1,7 +1,16 @@
+.wrapper {
+    margin-top: 10%;
+}
+
 body {
     text-align: center;
 }
 
 input {
-  font-size: 1rem;
+    font-size: 1rem;
+}
+
+input:hover {
+  background-color: green;
+  cursor: pointer;
 }
