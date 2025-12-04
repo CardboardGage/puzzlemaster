@@ -1,3 +1,10 @@
+html {
+    background: linear-gradient(90deg,rgba(222, 113, 113, 1) 0%, rgba(83, 106, 237, 1) 100%);
+}
+
+.wrapper {
+    margin-top: 10%;
+}
 
 body {
     text-align: center;
@@ -32,4 +39,9 @@ td.links {
 
 ul {
     list-style-type: none;
+}
+
+input:hover {
+    background-color: green;
+    cursor: pointer;
 }
