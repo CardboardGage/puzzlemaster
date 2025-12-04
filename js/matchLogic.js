@@ -905,7 +905,7 @@ function levelComplete(scene) {
     .text(
       w / 2,
       h / 2 - 10,
-      "Total Score: " + scene.totalScore,
+      "Points earned this round: " + scene.score,
       {
         fontSize: "24px",
         fill: "#ffffaa",
@@ -986,7 +986,7 @@ function endGame(scene) {
 
   // Show final total score (good for future DB storing)
   const scoreText = scene.add
-    .text(w / 2, h / 2 + 5, "Total Score: " + scene.totalScore, {
+    .text(w / 2, h / 2 + 5, "total score: " + scene.totalScore, {
       fontSize: "24px",
       fill: "#ffffaa",
       stroke: "#000000",
