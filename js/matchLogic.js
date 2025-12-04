@@ -1,17 +1,15 @@
 const ROWS = 8;
 const COLS = 8;
-const TILE_SIZE = 64; // adjust to fit your background
+const TILE_SIZE = 64;
 
-// Round / Score settings
-const MOVES_PER_ROUND = 10; // moves allowed per round
-const BASE_TARGET_SCORE = 500; // target score for round 1
-const TARGET_INCREMENT = 250; // how much the target increases each round
+const MOVES_PER_ROUND = 10;
+const BASE_TARGET_SCORE = 500;
+const TARGET_INCREMENT = 250;
 
-const POWERUP_CHANCE_PERCENT = 5; // % chance any new gem is a power-up (tweakable)
+const POWERUP_CHANCE_PERCENT = 5;
 
 const POWERUP_TYPES = ["gold", "pickaxe", "tnt"];
 
-// Gem keys used in the sprites
 const GEM_KEYS = [
   "triangleGem",
   "squareGem",
@@ -20,16 +18,11 @@ const GEM_KEYS = [
   "octogonGem",
 ];
 
-// PHASER LIFECYCLE
-//  PHASER LIFECYCLE
 function preload() {
-  // Background board image
   this.load.image("gamegrid", "../assets/gamepieces/gamegrid.jpg");
 
   this.load.image("caveWall", "../assets/background/caveWall.jpg");
 
-  // Gem images
-  // Gem images (corrected to .png)
   this.load.image("triangleGem", "../assets/gamepieces/gamepiece01.png");
   this.load.image("squareGem", "../assets/gamepieces/gamepiece02.png");
   this.load.image("diamondGem", "../assets/gamepieces/gamepiece03.png");
@@ -44,8 +37,7 @@ function preload() {
 function create() {
   let seedTag = document.querySelector("#seed");
   let seed = seedTag.innerHTML;
-  // Draw background and size it to match the grid area
-  // Full-screen cave wall background
+
   this.add
     .image(0, 0, "caveWall")
     .setOrigin(0, 0)
@@ -63,25 +55,21 @@ function create() {
   this.domTargetOutput = document.querySelector(".target output");
   this.domScoreOutput = document.querySelector(".score output");
 
-  // Game state
   this.round = 1;
-  this.score = 0; // round score (resets each round)
-  this.totalScore = 0; // cumulative score across rounds
-  this.highScore = 0; // best totalScore (for DB later)
+  this.score = 0;
+  this.totalScore = 0;
+  this.highScore = 0;
   this.movesLeft = MOVES_PER_ROUND;
   this.targetScore = BASE_TARGET_SCORE;
   this.isProcessingMove = false;
   this.isGameOver = false;
 
-  // 🔹 power-up / score buff state
   this.doubleScoreActive = false;
-  this.doubleScoreRoundsLeft = 0; // how many FUTURE rounds the buff lasts for
+  this.doubleScoreRoundsLeft = 0;
 
-  // Board and selection
   this.board = [];
   this.selectedGem = null;
 
-  // UI Text (below the grid)
   this.scoreText = this.add.text(20, ROWS * TILE_SIZE + 10, "Score: 0", {
     fontSize: "20px",
     fill: "#ffffff",
@@ -118,16 +106,21 @@ function create() {
     fill: "#ffffff",
   });
 
-  // Build the initial board
+  this.scoreText.setVisible(false);
+this.roundText.setVisible(false);
+this.targetText.setVisible(false);
+this.movesText.setVisible(false);
+this.totalScoreText.setVisible(false);
+this.highScoreText.setVisible(false);
+
+
   startNewRound(this);
 
   // Input
   this.input.on("gameobjectdown", handleGemDown, this);
 }
 
-function update() {
-  // Nothing needed per frame right now
-}
+function update() {}
 
 function updateDomHeader(scene) {
   if (scene.domLevelOutput) {
@@ -147,19 +140,16 @@ function updateDomHeader(scene) {
   }
 }
 
-// Create a gem at [row,col] that does NOT immediately make a 3-in-a-row
 function createNonMatchingGem(scene, row, col) {
   let gem = null;
   let attempts = 0;
   const board = scene.board;
 
   while (true) {
-    // Destroy previous candidate if any
     if (gem) {
       gem.destroy();
     }
 
-    // Use your existing random gem creator
     gem = createRandomGem(scene, row, col);
     const key = gem.getData("key");
 
@@ -178,13 +168,11 @@ function createNonMatchingGem(scene, row, col) {
       up1 && up2 && up1.getData("key") === key && up2.getData("key") === key;
 
     if (!formsHorizontalMatch && !formsVerticalMatch) {
-      // Safe: placing this gem does not create a 3+ run
       break;
     }
 
     attempts++;
     if (attempts > 20) {
-      // Just in case (very unlikely with 5 gem types)
       break;
     }
   }
@@ -193,7 +181,6 @@ function createNonMatchingGem(scene, row, col) {
 }
 
 function startNewRound(scene) {
-  // Destroy any existing gems (in case of new round)
   if (scene.board && scene.board.length) {
     for (let row = 0; row < ROWS; row++) {
       for (let col = 0; col < COLS; col++) {
@@ -205,35 +192,29 @@ function startNewRound(scene) {
     }
   }
 
-  // Reset the board array
   scene.board = [];
   for (let row = 0; row < ROWS; row++) {
     scene.board[row] = [];
     for (let col = 0; col < COLS; col++) {
-      // 🔹 Use the no-match creator instead of plain createRandomGem
       const gem = createNonMatchingGem(scene, row, col);
       scene.board[row][col] = gem;
     }
   }
 
-  // Reset round-based values
   scene.score = 0;
   scene.movesLeft = MOVES_PER_ROUND;
   scene.targetScore = BASE_TARGET_SCORE + (scene.round - 1) * TARGET_INCREMENT;
   scene.selectedGem = null;
   scene.isProcessingMove = false;
-  scene.isGameOver = false; // if you added game over
+  scene.isGameOver = false;
 
-  // Update text UI
   scene.scoreText.setText("Score: " + scene.score);
   scene.roundText.setText("Round: " + scene.round);
   scene.targetText.setText("Target: " + scene.targetScore);
   scene.movesText.setText("Moves: " + scene.movesLeft);
 
-  // 🔹 Sync DOM header with current values
   updateDomHeader(scene);
 
-  // 🔹 handle double-score buff duration
   if (scene.doubleScoreActive) {
     scene.doubleScoreRoundsLeft--;
     if (scene.doubleScoreRoundsLeft <= 0) {
@@ -355,9 +336,9 @@ function handleGemDown(pointer, gem) {
   const c2 = g2.getData("col");
 
   const isAdjacent =
-    ((Math.abs(c1 - c2) === 1) && (Math.abs(r1 - r2) === 1)) || 
-    ((Math.abs(c1 - c2) === 1) && (Math.abs(r1 - r2) === 0)) || 
-    ((Math.abs(c1 - c2) === 0) && (Math.abs(r1 - r2) === 1));
+    (Math.abs(c1 - c2) === 1 && Math.abs(r1 - r2) === 1) ||
+    (Math.abs(c1 - c2) === 1 && Math.abs(r1 - r2) === 0) ||
+    (Math.abs(c1 - c2) === 0 && Math.abs(r1 - r2) === 1);
 
   if (!isAdjacent) {
     shakeGem(scene, gem);
@@ -408,8 +389,8 @@ function usePowerup(scene, gem) {
     const centerCol = gem.getData("col");
     const gemsToDestroy = [];
 
-    for (let r = centerRow - 1; r <= centerRow + 2; r++) {
-      for (let c = centerCol - 1; c <= centerCol + 2; c++) {
+    for (let r = centerRow - 1; r <= centerRow + 1; r++) {
+      for (let c = centerCol - 1; c <= centerCol + 1; c++) {
         if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
           const g = scene.board[r][c];
           if (g) gemsToDestroy.push(g);
@@ -628,45 +609,45 @@ function findMatches(scene) {
     }
   }
 
-// Diagonal Matches 
-    for(let col = 0, row = 0; col < COLS & row < ROWS; col++, row++){
-        let run = [board[1][1]];
-        console.log(run);
-        // for(let row = 1; row < ROWS; row++){
-        //     let current = board[row][col];
-        //     let next = board[row + 1][col + 1];
-        //     let currentGem = current.getData('key');
-        //     let diagonals = findAntiDiagonals(scene,row);
-        //     let antiDiagonals = findAntiDiagonals(scene,row);
+  // Diagonal Matches
+  for (let col = 0, row = 0; (col < COLS) & (row < ROWS); col++, row++) {
+    let run = [board[1][1]];
+    console.log(run);
+    // for(let row = 1; row < ROWS; row++){
+    //     let current = board[row][col];
+    //     let next = board[row + 1][col + 1];
+    //     let currentGem = current.getData('key');
+    //     let diagonals = findAntiDiagonals(scene,row);
+    //     let antiDiagonals = findAntiDiagonals(scene,row);
 
-        //     while (!isOutOfBounds(row,col,run)){
-        //         diagonals.forEach((gem) => {
-        //             if(gem.getData('key') == currentGem){
-        //                 run.push(gem);
-        //             } else {
-        //                 if(run.length >= 3){
-        //                     matches.push(run.slice());
-        //                 }
-        //             }
-        //         })
-        //         antiDiagonals.forEach((gem) => {
-        //             if(gem.getData('key') == currentGem){
-        //                 run.push(gem);
-        //             } else {
-        //                 if (run.length >= 3) {
-        //                     matches.push(run.slice());
-        //                 }
-        //             }
-        //         })
-        //     } 
-        //     if(run.length >= 3) {
-        //         matches.push(run.slice());
-        //     }
-        //     run = [next];            
-        // }
-    }
+    //     while (!isOutOfBounds(row,col,run)){
+    //         diagonals.forEach((gem) => {
+    //             if(gem.getData('key') == currentGem){
+    //                 run.push(gem);
+    //             } else {
+    //                 if(run.length >= 3){
+    //                     matches.push(run.slice());
+    //                 }
+    //             }
+    //         })
+    //         antiDiagonals.forEach((gem) => {
+    //             if(gem.getData('key') == currentGem){
+    //                 run.push(gem);
+    //             } else {
+    //                 if (run.length >= 3) {
+    //                     matches.push(run.slice());
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     if(run.length >= 3) {
+    //         matches.push(run.slice());
+    //     }
+    //     run = [next];
+    // }
+  }
 
-    return matches;
+  return matches;
 }
 
 function handleMatches(scene, matches) {
@@ -884,8 +865,7 @@ function dropGems(scene) {
 function checkRoundEnd(scene) {
   // Win: target reached
   if (scene.score >= scene.targetScore) {
-    scene.round += 1;
-    startNewRound(scene);
+    levelComplete(scene);
     return;
   }
 
@@ -898,6 +878,79 @@ function checkRoundEnd(scene) {
   // Otherwise, continue playing this round
   scene.isProcessingMove = false;
 }
+
+function levelComplete(scene) {
+  scene.isProcessingMove = false; // stop further swaps under the overlay
+
+  const w = scene.scale.width;
+  const h = scene.scale.height;
+
+  // Semi-dark overlay
+  const overlay = scene.add
+    .rectangle(0, 0, w, h, 0x000000, 0.6)
+    .setOrigin(0, 0);
+
+  // Main "Round Complete" text
+  const titleText = scene.add
+    .text(w / 2, h / 2 - 60, "ROUND " + scene.round + " COMPLETE!", {
+      fontSize: "40px",
+      fill: "#ffffff",
+      stroke: "#000000",
+      strokeThickness: 6,
+    })
+    .setOrigin(0.5);
+
+  // Show current total score
+  const infoText = scene.add
+    .text(
+      w / 2,
+      h / 2 - 10,
+      "Total Score: " + scene.totalScore,
+      {
+        fontSize: "24px",
+        fill: "#ffffaa",
+        stroke: "#000000",
+        strokeThickness: 3,
+      }
+    )
+    .setOrigin(0.5);
+
+  // Show what the next target will be
+  const nextTarget = BASE_TARGET_SCORE + (scene.round) * TARGET_INCREMENT;
+  const nextText = scene.add
+    .text(
+      w / 2,
+      h / 2 + 25,
+      "Next Target: " + nextTarget,
+      {
+        fontSize: "20px",
+        fill: "#ffffff",
+      }
+    )
+    .setOrigin(0.5);
+
+  const promptText = scene.add
+    .text(w / 2, h / 2 + 65, "Click to start next round", {
+      fontSize: "20px",
+      fill: "#ffffff",
+    })
+    .setOrigin(0.5);
+
+  // One-time click to go to the next round
+  overlay.setInteractive();
+  overlay.once("pointerdown", () => {
+    overlay.destroy();
+    titleText.destroy();
+    infoText.destroy();
+    nextText.destroy();
+    promptText.destroy();
+
+    // advance to the next round, then reset board
+    scene.round += 1;
+    startNewRound(scene);
+  });
+}
+
 
 function endGame(scene) {
   scene.isGameOver = true;
