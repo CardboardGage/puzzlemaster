@@ -1,5 +1,4 @@
 html {
-    background: #de7171;
     background: linear-gradient(90deg,rgba(222, 113, 113, 1) 0%, rgba(83, 106, 237, 1) 100%);
 }
 
@@ -124,21 +123,19 @@ button:hover {
 
 #leaderboard td {
     padding: 4px;
-    vertical-align: top;
 }
 
-.userID, .scoreLabel {
+.userID, .scoreLabel, .score, .username {
     font-size: x-large;
 }
 
 .username {
     text-align: left;
-    font-size: large;
+    width: 50%;
 }
 
 .score, .level {
     text-align: right;
-    font-size: large;
 }
 
 #leaderboard ul {
@@ -160,4 +157,18 @@ tr:nth-child(odd) {
     height: 30px;
     border-radius: 4px;
     margin-bottom: 1rem;
+}
+
+.level {
+    text-align: right;
+    font-size: x-large;
+}
+
+#leaderboard:has(.level) {
+    .score {
+        text-align: center;
+    }
+    .level, .score, .username {
+        width: 33.33%;
+    }
 }
