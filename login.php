@@ -36,25 +36,16 @@
 ?> 
 <body>
   <div class="wrapper">
-    <?php 
-      if ($_SESSION['username']) {
-    ?> 
-    <p style="color:red">Incorrect Username</p>
-    <?php 
-      $_SESSION['username'] = '';
-    }
-    ?>
-
-    <?php 
-      if ($_SESSION['password']) {
-    ?> 
-    <p style="color:red">Incorrect Password</p>
-    <?php 
-      $_SESSION['password'] = '';
-    }
-    ?>     
+ 
 
     <form action="" method="post">
+      <?php 
+      if ($_SESSION['username'] || $_SESSION['password']) {
+      echo("<label id='errorMsg'>Incorrect Username or Password</label>");
+        $_SESSION['username'] = '';
+        $_SESSION['password'] = '';
+      }
+      ?> 
       <label for="username">Username:</label>
       <br>
       <input type="text" name="username" required maxlength="24">
