@@ -1,3 +1,7 @@
+html {
+  background: linear-gradient(90deg,rgba(222, 113, 113, 1) 0%, rgba(83, 106, 237, 1) 100%);
+}
+
 canvas {
     display: block;
     margin: auto;
@@ -11,12 +15,14 @@ header:not(input) {
 
 aside {
     position: absolute;     /* sticks to the left */
-    left: 1rem;             /* a little spacing from the browser edge */
-    top: 10rem;             /* adjust to your layout */
+    left: calc((100% - 512px) / 2 + 215px);             /* left: screen width - 512(canvas size), half that to fetch left edge of canvas,
+    then 215px to the right is exactly half of menu size (width 400 plus 15px padding so 430), otherwise only half of the menu would be hidden*/
+    top: 148px;
     display: flex;
     flex-direction: column; /* vertical layout */
     gap: 1rem;              /* spacing between gem icons */
     align-items: center;
+    transition: left .7s ease;
 }
 
 aside ul {
@@ -44,6 +50,7 @@ aside ul li img {
   align-items: center;
   width: 10%;
   height: 11%;
+  white-space: nowrap;
 }
 
 .level {
@@ -103,4 +110,32 @@ input {
 input:hover {
   cursor: pointer;
   background-color: rgba(235, 52, 52, 1);
+}
+
+.helpMenu {
+  background-color: tan;
+  padding: 15px;
+  width: 400px;
+  position: absolute;
+  z-index: -5;
+}
+/* absolutely positioned because hover/click events dont work with left offset while what theyre contained in is in the background  */
+.help {
+  rotate: 270deg;
+  background-color: tan;
+  font-size: large;
+  position: absolute;
+  height: 28px;
+  top: 156px; 
+  left: calc((100% - 512px) / 2 - 35.5px);   
+  border-radius: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: none;
+  z-index: 5;
+  transition: left .7s ease; 
+}
+
+.help:hover {
+  cursor: pointer;
 }
