@@ -43,24 +43,26 @@ if (!isset($_SESSION["seed"])) {
             </div>
         </header>
         <main>
+            <button class="help">Help</button>
             <aside>
-                <!-- //// How pieces work ///// -->
-                <ul>
-                    <li><img src="../assets/gamepieces/gamepiece01.png"
-                            alt="triangle gem"></li>
-                    <li>can move horizontally, veritcally, and diagnoally</li>
-                    <li><img src="../assets/gamepieces/goldPowerup.png"
-                            alt="gold powerup"></li>
-                    <li>can collect gold for bonus points for this round and the next</li>
-                    <li><img src="../assets/gamepieces/pickaxePowerup.png"
-                            alt="pickaxe powerup"></li>
-                    <li>can break all gems in a horizontal row</li>
-                    <li><img src="../assets/gamepieces/tntPowerUp.png"
-                            alt="tnt powerup"></li>
-                    <li>can break all gems in a 4x4 area</li>
-                </ul>
+                <div class="helpMenu">
+                    <!-- //// How pieces work ///// -->
+                    <ul>
+                        <li><img src="../assets/gamepieces/gamepiece01.png"
+                                alt="triangle gem"></li>
+                        <li>Moves horizontally, veritcally, and diagonally</li>
+                        <li><img src="../assets/gamepieces/goldPowerup.png"
+                                alt="gold powerup"></li>
+                        <li>Gain bonus points for the current and next round</li>
+                        <li><img src="../assets/gamepieces/pickaxePowerup.png"
+                                alt="pickaxe powerup"></li>
+                        <li>Breaks a row of gems</li>
+                        <li><img src="../assets/gamepieces/tntPowerUp.png"
+                                alt="tnt powerup"></li>
+                        <li>Breaks all gems in a 3x3 area</li>
+                    </ul>
+                </div>
             </aside>
-
             <!-- defining the game area -->
             <div class="gameArea">
                 <div id="phaser-container"></div>
@@ -72,5 +74,6 @@ if (!isset($_SESSION["seed"])) {
         </main>
     </div>
     <aside hidden id="seed"><?= $_SESSION['seed'] ?></aside>
+    <script src="../js/helpMenu.js"></script>
 </body>
 </html>
