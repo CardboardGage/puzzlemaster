@@ -46,9 +46,6 @@
         <form action="usersAdmin.php" method="post">
           <input type="submit" id="userListBtn" class="dataBtn" value="View Users" name="userList">
         </form>
-        <form action="" method="get">
-          <input type="submit" id="createRunBtn" class="dataBtn" value="Create Run Data" name="createRun">
-        </form>
         <form action="leaderboardAdmin.php" method="post">
           <input type="submit" id="leaderboardBtn" class="dataBtn" value="View Leaderboard" name="leaderboard">
         </form>
