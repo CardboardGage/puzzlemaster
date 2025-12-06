@@ -57,15 +57,6 @@
         </form>
       <?php  } ?> 
     
-    <!-- selecting user to edit -->
-    <?php if ($method == "GET" && isset($_GET["editUser"])) { ?>
-      <form action="" method="get">
-        <label for="username"> Username to edit: </label>
-        <input type="text" name="username">
-        <input type="submit" class="dataBtn" value="Submit" name="userSubmit">
-      </form>
-      <button id="backBtn">Cancel</button>
-    <?php } ?> 
 
     <!-- editing user data -->
     <?php if ($method == "GET" && isset($_GET["userSubmit"])) {
