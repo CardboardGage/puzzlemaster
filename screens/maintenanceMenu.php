@@ -43,9 +43,6 @@
 
       <!-- main maintenance menu -->
       <?php if (!isset($_GET["editUser"]) && !isset($_GET["createRun"]) && !isset($_GET["createMode"]) && !isset($_GET["userSubmit"])) { ?> 
-        <form action="" method="get">
-          <input type="submit" id="editUserBtn" class="databBtn" value="Edit User Data" name="editUser">
-        </form>
         <form action="usersAdmin.php" method="post">
           <input type="submit" id="userListBtn" class="dataBtn" value="View Users" name="userList">
         </form>
