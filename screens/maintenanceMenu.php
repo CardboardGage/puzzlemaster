@@ -119,7 +119,7 @@
         <input type="text" name="levelReached" id="" value="0">
         <br>
         <label for="seed">Seed</label>
-        <input type="text" name="seed" value="0">
+        <input type="text" name="seed" value="">
         <br>
         <label for="mode">Mode</label>
         <select name="mode" id="modeSelect"><?php 
@@ -174,7 +174,7 @@
     $userID = trim(sanitizeInt(INPUT_POST,"userID"));
     $score = trim(sanitizeInt(INPUT_POST,"score"));
     $levelReached = trim(sanitizeInt(INPUT_POST,"levelReached"));
-    $seed = trim(sanitizeInt(INPUT_POST,"seed"));
+    $seed = trim(sanitizeString(INPUT_POST,"seed"));
     $mode = trim(sanitizeInt(INPUT_POST,"mode"));
 
     try {
