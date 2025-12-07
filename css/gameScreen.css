@@ -139,3 +139,7 @@ input:hover {
 .help:hover {
   cursor: pointer;
 }
+
+aside#seed {
+  display: hidden;
+}
