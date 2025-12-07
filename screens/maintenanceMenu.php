@@ -4,7 +4,7 @@
   }
 
   require '../sanitize.php';
-  require '../dbconnect.php';
+  require '../dbConnect.php';
 
   $method = $_SERVER['REQUEST_METHOD'];
 
