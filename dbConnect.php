@@ -67,7 +67,6 @@
     $date = date("Y-m-d H:i:s");
     $query = "UPDATE `user` SET LastLogin = '$date'
     WHERE username = '$username'";
-    echo $query;
     try {
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
