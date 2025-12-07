@@ -82,7 +82,7 @@
   // Returns the full contents of the runHistory table along with the Username corresponding to each UserID.
   function getFullLeaderboard($pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID, user.Username 
-      FROM puzzlemaster.runhistory
+      FROM runhistory
       LEFT JOIN user USING (UserID)
       ORDER BY RunID ASC";
 
@@ -109,7 +109,7 @@
   // Returns a fetched run based off the input RunID.
   function getRunByID($runID, $pdo) {
     $query = "SELECT RunID, UserID, Score, LevelReached, TimeOf, Seed, ModeID 
-    FROM puzzlemaster.runhistory
+    FROM runhistory
     WHERE RunID = ?
     LIMIT 1";
     
@@ -358,7 +358,7 @@
     switch ($set) {
       case "normal": 
             $query = "SELECT RunID, UserID, Score, user.Username 
-              FROM puzzlemaster.runhistory
+              FROM runhistory
               LEFT JOIN user USING (UserID)
               WHERE ModeID = 1
               ORDER BY Score DESC
@@ -366,7 +366,7 @@
       break;
     case "seeded": 
             $query = "SELECT RunID, UserID, Score, user.Username 
-              FROM puzzlemaster.runhistory
+              FROM runhistory
               LEFT JOIN user USING (UserID)
               WHERE ModeID = 2
               ORDER BY Score DESC
@@ -374,7 +374,7 @@
       break;
     case "highLevel": 
             $query = "SELECT RunID, UserID, Score, LevelReached, user.Username 
-              FROM puzzlemaster.runhistory
+              FROM runhistory
               LEFT JOIN user USING (UserID)
               WHERE ModeID = 1
               ORDER BY LevelReached DESC, Score DESC
