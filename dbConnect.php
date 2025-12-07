@@ -206,7 +206,7 @@
 
   // Updates the contents of one row in runHistory with the exception of RunID and UserID.
   function editRun($runID, $score, $levelReached, $timeOf, $seed, $modeID, $pdo) {
-    $query = "UPDATE runHistory
+    $query = "UPDATE runhistory
     SET Score = ?, LevelReached = ?, TimeOf = ?, Seed = ?, ModeID = ?
     WHERE RunID = $runID";
     try {
@@ -222,7 +222,7 @@
 
   // Removes an entry from runHistory by its RunID
   function deleteRun($runID, $pdo) {
-    $query = "DELETE FROM runHistory WHERE RunID = $runID";
+    $query = "DELETE FROM runhistory WHERE RunID = $runID";
     try {
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
