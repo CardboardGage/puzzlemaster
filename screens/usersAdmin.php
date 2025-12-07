@@ -43,9 +43,11 @@
       ?>  
       <tr>
         <td class="links">
-          <a href="admin/editUser.php?userID=<?=$entry['UserID']?>">Edit</a><br>
-          <a href="admin/deleteUser.php?userID=<?=$entry['UserID']?>">Delete</a><br>
-        </td>
+          <a href="admin/editUser.php?userID=<?=$entry['UserID']?>">Edit</a><br><?php
+          if ($entry['AdminStatus'] != 1) {
+          ?><a href="admin/deleteUser.php?userID=<?=$entry['UserID']?>">Delete</a><br><?php
+          }
+        ?></td>
         <td class="userID"><?= $entry['UserID'] ?></td>
         <td class="username"><?= $entry['Username'] ?></td>
         <td class="email"><?= $entry['Email'] ?></td>
