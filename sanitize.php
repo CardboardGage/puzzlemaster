@@ -10,11 +10,15 @@ function sanitizeString($type, $field) {
     if (isset($_GET[$field])) {
       return htmlspecialchars(strip_tags($_GET[$field]));
     }
+  } else if ($type == "SESSION") {
+    if (isset($_SESSION[$field])) {
+      return htmlspecialchars(strip_tags($_SESSION[$field]));
+    }
   } else {
     if (isset($_SERVER[$field])) {
       return htmlspecialchars(strip_tags($_SERVER[$field]));
     }
-  }
+  } 
 }
 
 function sanitizeFloat($type, $field) {

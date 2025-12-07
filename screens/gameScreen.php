@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION["seed"])) {
     $_SESSION['seed'] = "";
 }
+require "../sanitize.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +74,7 @@ if (!isset($_SESSION["seed"])) {
             </div>
         </main>
     </div>
-    <aside hidden id="seed"><?= $_SESSION['seed'] ?></aside>
+    <aside hidden id="seed"><?= substr(sanitizeString("SESSION", 'seed'), 0, 16); ?></aside>
     <script src="../js/helpMenu.js"></script>
 </body>
 </html>

@@ -141,5 +141,5 @@ input:hover {
 }
 
 aside#seed {
-  display: hidden;
+  display: none;
 }
