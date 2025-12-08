@@ -177,6 +177,10 @@
     date_default_timezone_set("America/Chicago");
     $timeof = date("Y-m-d H:i:s");
 
+    if ($mode == "") {
+      $mode = 1;
+    }
+
     try {
       $pdo->beginTransaction();
       $stmt = $pdo->prepare($query);
